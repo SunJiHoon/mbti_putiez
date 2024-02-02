@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>질문 4</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+        .option {
+            margin-bottom: 10px;
+        }
+        .option input[type="radio"] {
+            display: none;
+        }
+        .option label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .option label:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>질문 4</h1>
+    <div class="question">
+        <p>310관 1층에서 중앙대학교의 마스코트 푸앙이를 발견했어! 50년 동안 타임캡슐 속에서 잠들어 있다가 깨어난 청룡이래.</p>
+    </div>
+    <div class="options">
+        <div class="option">
+            <input type="radio" id="option1" name="answer" value="S">
+            <label for="option1">귀엽다... 엄청 오래 잠들어 있었네...</label>
+        </div>
+        <div class="option">
+            <input type="radio" id="option2" name="answer" value="N">
+            <label for="option2">50년만에 나왔으니까 세상이 신기했겠다! 푸앙이의 이야기가 더 궁금해!</label>
+        </div>
+    </div>
+    <button onclick="nextQuestion()">다음 질문</button>
+</div>
+
+<script>
+    function nextQuestion() {
+        // 여기에 다음 질문으로 이동하는 로직을 추가하세요.
+        // 예를 들어, 다음 질문 페이지로 이동하는 코드를 작성합니다.
+        window.location.href = "question5.html";
+    }
+</script>
+</body>
+</html>
