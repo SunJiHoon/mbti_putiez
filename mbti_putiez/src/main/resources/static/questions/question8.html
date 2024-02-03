@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>질문 8</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+        .option {
+            margin-bottom: 10px;
+        }
+        .option input[type="radio"] {
+            display: none;
+        }
+        .option label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .option label:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>질문 8</h1>
+    <div class="question">
+        <p>중앙대학교의 봄축제, LUCAUS가 열리고 있어! 부스가 엄청 많은데, 저쪽 부스에서 한 번 체험해보라고 하네...? 다음 수업이 얼마 안남았는데...</p>
+    </div>
+    <div class="options">
+        <div class="option">
+            <input type="radio" id="option1" name="answer" value="T">
+            <label for="option1">지금 바빠서 다음에 해볼게요!</label>
+        </div>
+        <div class="option">
+            <input type="radio" id="option2" name="answer" value="F">
+            <label for="option2">이거 하나만 하고 갈까...? 거절하기 죄송하네...</label>
+        </div>
+    </div>
+    <button onclick="nextQuestion()">다음 질문</button>
+</div>
+
+<script>
+    function nextQuestion() {
+        // 여기에 다음 질문으로 이동하는 로직을 추가하세요.
+        // 예를 들어, 다음 질문 페이지로 이동하는 코드를 작성합니다.
+        window.location.href = "question9.html";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>질문 6</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+        .option {
+            margin-bottom: 10px;
+        }
+        .option input[type="radio"] {
+            display: none;
+        }
+        .option label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .option label:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>질문 6</h1>
+    <div class="question">
+        <p>벌써 중간고사 기간이 다가왔어! 대학교에서 처음 보는 시험이라 긴장돼... 근데 대학교에서는 시험을 다 보면 먼저 나가도 된다고?</p>
+    </div>
+    <div class="options">
+        <div class="option">
+            <input type="radio" id="option1" name="answer" value="N">
+            <label for="option1">진짜일까? 교수님이 부르는거 아니야...? 점수 깎이면 어떡하지...</label>
+        </div>
+        <div class="option">
+            <input type="radio" id="option2" name="answer" value="S">
+            <label for="option2">다 풀면 그냥 나가면 되는구나... 나도 그렇게 해야지!</label>
+        </div>
+    </div>
+    <button onclick="nextQuestion()">다음 질문</button>
+</div>
+
+<script>
+    function nextQuestion() {
+        // 여기에 다음 질문으로 이동하는 로직을 추가하세요.
+        // 예를 들어, 다음 질문 페이지로 이동하는 코드를 작성합니다.
+        window.location.href = "question7.html";
+    }
+</script>
+</body>
+</html>
