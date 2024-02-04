@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검사지</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+    .round-button {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: #3498db;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 100px; /* 버튼 내부의 텍스트를 버튼 가운데에 위치시킵니다. */
+        cursor: pointer;
+        margin: 10px;
+        display: inline-block;
+    }
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    .questions {
+        margin-bottom: 20px;
+    }
+    .options {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+        gap: 20px;
+    }
+    .option {
+        margin-bottom: 10px;
+    }
+    .option input[type="radio"] {
+        display: none;
+    }
+    .option label {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .option label:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<body>
+<div class="container">
+    <div id="button-container">
+        <!-- 버튼들이 여기에 동적으로 추가될 예정입니다. -->
+    </div>
+
+    <!-- 질문 총 12개-->
+    <h1>질문 1~3번째</h1>
+
+    <div id = "questions-form">
+
+    </div>
+</div>
+
+<!-- 버튼 JavaScript 코드 -->
+<script>
+    var buttonContainer = document.getElementById('button-container');
+    var buttonTexts = ["1~3", "4~6", "7~9", "10~12"];
+
+    buttonTexts.forEach(function(text) {
+        var button = document.createElement('div');
+        button.classList.add('round-button');
+        button.textContent = text;
+        buttonContainer.appendChild(button);
+    });
+</script>
+
+<!-- JavaScript 코드 -->
+<script>
+    var questionsForm = document.getElementById('questions-form');
+
+    // question-container 생성
+    var questionContainer = document.createElement('div');
+    questionContainer.id = "questions";
+    questionsForm.appendChild(questionContainer);
+
+    // answer-container 생성
+    var answerContainer = document.createElement('div');
+    answerContainer.id = "options";
+    questionsForm.appendChild(answerContainer);
+
+    var questions = [
+        //1~3
+        {
+            question: "드디어 나도 중앙대학교 신입생! 처음으로 신입생 정모에 참석했는데, 처음보는 같은 과 동기들이 많아!",
+            options: [
+                { id: "option1", value: "E", label: "우리 친해지자! 먼저 말을 걸어본다." },
+                { id: "option2", value: "I", label: "말을 못 걸겠어..! 먼저 다가와주기를 기다린다." }
+            ]
+        }
+        ,
+        {
+            question: "개강 후 처음으로 수업을 듣고 나니까 점심 먹을 시간이 됐어. 그런데 정모 때 만났던 친구들이 보여!",
+            options: [
+                { id: "option1", value: "E", label: "여러 명이서 다같이 밥 먹으러 가자!" },
+                { id: "option2", value: "I", label: "나랑 마음 맞는 친구 한 명이면 충분해..!" }
+            ]
+        }
+        ,
+        {
+            question: "잔디 광장에서 동아리 박람회를 하네? 중앙동아리들을 둘러보자!",
+            options: [
+                { id: "option1", value: "I", label: "동아리는 하나면 충분해!" },
+                { id: "option2", value: "E", label: "이것도 재밌어 보이고, 저것도 재밌어 보여! 다 들어갈래!" }
+            ]
+        }
+        ,
+        //4~6
+        {
+            question: "어떤 일정에 참여하시겠습니까?",
+            options: [
+                { id: "option1", value: "T", label: "지금 바빠서 다음에 해볼게요!" },
+                { id: "option2", value: "F", label: "이거 하나만 하고 갈까...? 거절하기 죄송하네..." }
+            ]
+        }
+        ,
+        {
+            question: "어떤 일정에 참여하시겠습니까?",
+            options: [
+                { id: "option1", value: "T", label: "지금 바빠서 다음에 해볼게요!" },
+                { id: "option2", value: "F", label: "이거 하나만 하고 갈까...? 거절하기 죄송하네..." }
+            ]
+        }
+        ,
+        {
+            question: "어떤 일정에 참여하시겠습니까?",
+            options: [
+                { id: "option1", value: "T", label: "지금 바빠서 다음에 해볼게요!" },
+                { id: "option2", value: "F", label: "이거 하나만 하고 갈까...? 거절하기 죄송하네..." }
+            ]
+        }
+        ,
+        {
+            question: "어떤 일정에 참여하시겠습니까?",
+            options: [
+                { id: "option1", value: "T", label: "지금 바빠서 다음에 해볼게요!" },
+                { id: "option2", value: "F", label: "이거 하나만 하고 갈까...? 거절하기 죄송하네..." }
+            ]
+        }
+        ,
+        {
+            question: "어떤 일정에 참여하시겠습니까?",
+            options: [
+                { id: "option1", value: "T", label: "지금 바빠서 다음에 해볼게요!" },
+                { id: "option2", value: "F", label: "이거 하나만 하고 갈까...? 거절하기 죄송하네..." }
+            ]
+        }
+        ,
+        {
+            question: "어떤 일정에 참여하시겠습니까?",
+            options: [
+                { id: "option1", value: "T", label: "지금 바빠서 다음에 해볼게요!" },
+                { id: "option2", value: "F", label: "이거 하나만 하고 갈까...? 거절하기 죄송하네..." }
+            ]
+        }
+        ,
+        {
+            question: "어떤 일정에 참여하시겠습니까?",
+            options: [
+                { id: "option1", value: "T", label: "지금 바빠서 다음에 해볼게요!" },
+                { id: "option2", value: "F", label: "이거 하나만 하고 갈까...? 거절하기 죄송하네..." }
+            ]
+        }
+        ,
+        {
+            question: "어떤 일정에 참여하시겠습니까?",
+            options: [
+                { id: "option1", value: "T", label: "지금 바빠서 다음에 해볼게요!" },
+                { id: "option2", value: "F", label: "이거 하나만 하고 갈까...? 거절하기 죄송하네..." }
+            ]
+        }
+        ,
+        {
+            question: "어떤 일정에 참여하시겠습니까?",
+            options: [
+                { id: "option1", value: "T", label: "지금 바빠서 다음에 해볼게요!" },
+                { id: "option2", value: "F", label: "이거 하나만 하고 갈까...? 거절하기 죄송하네..." }
+            ]
+        }
+
+        /*
+        {
+            question: "어떤 프로그래밍 언어를 사용하시나요?",
+            options: ["JavaScript", "Python", "Java", "C#"]
+        },
+        {
+            question: "어떤 운영 체제를 사용하시나요?",
+            options: ["Windows", "MacOS", "Linux", "기타"]
+        },
+        {
+            question: "가장 좋아하는 음식은 무엇인가요?",
+            options: ["피자", "햄버거", "치킨", "짜장면"]
+        }*/
+        // 추가 질문들을 여기에 추가할 수 있습니다.
+    ];
+
+    var currentQuestionIndex = 0;
+
+    function displayQuestions() {
+        // 현재 인덱스부터 다음 세 개의 질문 표시
+        for (var i = currentQuestionIndex; i < Math.min(currentQuestionIndex + 3, questions.length); i++) {
+            var currentQuestion = questions[i];
+
+            // 질문 표시
+            var questionElement = document.createElement('p');
+            questionElement.textContent = currentQuestion.question;
+            questionContainer.appendChild(questionElement);
+
+            // 답변 선택지 제공
+            currentQuestion.options.forEach(function(option, index) {
+                var optionDiv = document.createElement('div');
+                optionDiv.classList.add('option');
+
+                var radioButton = document.createElement('input');
+                radioButton.type = "radio";
+                radioButton.id = option.id;
+                radioButton.name = "answer";
+                radioButton.value = option.value; // 변경된 value 값 설정
+
+                var label = document.createElement('label');
+                label.setAttribute('for', option.id);
+                label.textContent = option.label; // 변경된 label 값 설정
+
+                optionDiv.appendChild(radioButton);
+                optionDiv.appendChild(label);
+
+                radioButton.addEventListener('click', function() {
+                    var answerElement = document.createElement('p');
+                    answerElement.textContent = "내 선택: " + option.label;
+                    answerContainer.appendChild(answerElement);
+
+                    // 다음 질문 표시
+                    questionContainer.innerHTML = ''; // 현재 질문 삭제
+                    answerContainer.innerHTML = ''; // 현재 답변 삭제
+
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < questions.length) {
+                        displayQuestions(); // 다음 질문 표시
+                    } else {
+                        var endMessage = document.createElement('p');
+                        endMessage.textContent = "질문이 끝났습니다.";
+                        questionContainer.appendChild(endMessage);
+                    }
+                });
+
+                questionContainer.appendChild(optionDiv);
+            });
+
+        }
+    }
+
+    // 초기 질문 표시
+    displayQuestions();
+</script>
+</body>
+</html>
