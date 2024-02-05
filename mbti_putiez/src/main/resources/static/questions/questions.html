@@ -495,6 +495,9 @@
         axios.post(url, { mbtiElements: responses })
             .then(function (response) {
                 console.log(response.data); // 응답 처리
+                // 리다이렉션 수행
+                window.location.href = '/result';
+
             })
             .catch(function (error) {
                 console.error(error);
