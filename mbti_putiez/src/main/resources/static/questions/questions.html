@@ -74,6 +74,12 @@
         <!-- 버튼들이 여기에 동적으로 추가될 예정입니다. -->
     </div>
 
+    <!-- 응답현황 -->
+    <div id="response-container">
+        <!-- 사용자의 응답현황이 기록되고 표시 됩니다. -->
+
+    </div>
+
     <!-- 질문 총 12개-->
     <h1>질문 1~3번째</h1>
 
@@ -204,6 +210,7 @@
 
     function displayQuestions() {
         // 현재 인덱스부터 다음 세 개의 질문 표시
+        currentQuestionIndex = currentQuestionIndex - (currentQuestionIndex % 3);
         for (var i = currentQuestionIndex; i < Math.min(currentQuestionIndex + 3, questions.length); i++) {
             var currentQuestion = questions[i];
 
@@ -281,6 +288,34 @@
 
 </script>
 
+<script>
+    var responseContainer = document.getElementById('response-container');
+
+    // 1~12번 문항에 대한 응답을 저장하는 배열
+    var responses = [];
+
+    // 사용자 응답을 각 문항에 따라 업데이트하는 함수
+    function updateResponse(currentQuestionIndex, answer) {
+        responses[currentQuestionIndex] = answer;
+        displayResponse();
+    }
+
+    // 응답 현황을 표시하는 함수
+    function displayResponse() {
+        // 이전에 표시된 응답을 지웁니다.
+        responseContainer.innerHTML = '';
+
+        // 각 문항에 대한 응답을 표시합니다.
+        for (var i = 0; i < responses.length; i++) {
+            var responseParagraph = document.createElement('p');
+            responseParagraph.textContent = (i + 1) + "번 문항: " + (responses[i] ? responses[i] : "아직 응답하지 않음");
+            responseContainer.appendChild(responseParagraph);
+        }
+    }
+
+    // 초기 응답 현황 표시
+    displayResponse();
+</script>
 
 </body>
 </html>
