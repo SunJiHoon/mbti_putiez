@@ -14,15 +14,15 @@
         text-align: center;
     }
     .round-button {
-        width: 100px;
-        height: 100px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         background-color: #3498db;
         color: #ffffff;
         font-size: 16px;
         font-weight: bold;
         text-align: center;
-        line-height: 100px; /* 버튼 내부의 텍스트를 버튼 가운데에 위치시킵니다. */
+        line-height: 50px; /* 버튼 내부의 텍스트를 버튼 가운데에 위치시킵니다. */
         cursor: pointer;
         margin: 10px;
         display: inline-block;
@@ -66,6 +66,30 @@
     .option label:hover {
         background-color: #0056b3;
     }
+    .prev-button{
+        width: 100px; /* 버튼 너비 */
+        height: 50px; /* 버튼 높이 */
+        background-color: #4CAF50; /* 배경색 */
+        color: white; /* 글자색 */
+        border: none; /* 테두리 없음 */
+        border-radius: 5px; /* 테두리 반경 */
+        font-size: 16px; /* 글꼴 크기 */
+        cursor: pointer; /* 커서 타입 */
+        margin: 10px; /* 마진 */
+
+    }
+    .next-button {
+        width: 100px; /* 버튼 너비 */
+        height: 50px; /* 버튼 높이 */
+        background-color: #4CAF50; /* 배경색 */
+        color: white; /* 글자색 */
+        border: none; /* 테두리 없음 */
+        border-radius: 5px; /* 테두리 반경 */
+        font-size: 16px; /* 글꼴 크기 */
+        cursor: pointer; /* 커서 타입 */
+        margin: 10px; /* 마진 */
+    }
+
 </style>
 
 <body>
@@ -86,6 +110,14 @@
     <div id = "questions-form">
 
     </div>
+
+
+    <!-- 이전 버튼 -->
+    <button class="prev-button">이전</button>
+    <!-- 다음 버튼 -->
+    <button class="next-button">다음</button>
+
+
 </div>
 
 
@@ -334,6 +366,50 @@
     // 초기 응답 현황 표시
     displayResponse();
 </script>
+<script>
+    // 이전 버튼 클릭 이벤트 핸들러
+    document.querySelector('.prev-button').addEventListener('click', function() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex -= 3;
+            //console.log("currentQuestionIndex is now: ", currentQuestionIndex);
+            updateContent();
+        }
+    });
+
+    // 다음 버튼 클릭 이벤트 핸들러
+    document.querySelector('.next-button').addEventListener('click', function() {
+        if (currentQuestionIndex < questions.length - (1 * 3)) {
+            currentQuestionIndex += 3;
+            updateContent();
+        }
+    });
+
+    // 내용 업데이트 함수
+    function updateContent() {
+        questionContainer.innerHTML = ''; // 현재 질문 삭제
+        answerContainer.innerHTML = ''; // 현재 답변 삭제
+        displayQuestions();
+    }
+
+    // 특정 조건이 true일 때 "다음" 버튼을 숨기는 함수
+    function hideNextButton() {
+        document.querySelector('.next-button').style.display = 'none';
+    }
+
+    // 특정 조건이 false일 때 "다음" 버튼을 보이게 하는 함수
+    function showNextButton() {
+        document.querySelector('.next-button').style.display = 'block'; // 원래 display 값으로 변경
+    }
+
+    // 예시: currentIndex가 contents 배열의 마지막 인덱스와 같을 때 "다음" 버튼을 숨김
+    if (currentIndex === contents.length - 1) {
+        hideNextButton();
+    } else {
+        showNextButton();
+    }
+
+</script>
+
 
 </body>
 </html>
