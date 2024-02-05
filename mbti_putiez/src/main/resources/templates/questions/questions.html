@@ -138,6 +138,13 @@
     <!-- 제출 버튼 -->
     <button class="submit-button" id="myForm" onclick="openFormInNewWindow()">제출</button>
 
+    <!--테스트용 제출 버튼-->
+    <form id="registerForm" action="/result-existing" method="post">
+        <label>
+            <input type="hidden" name="mbtiElements" id="responses">
+        </label>
+        <input type="submit" value="다음 단계" />
+    </form>
 
 
 </div>
@@ -264,6 +271,7 @@
 
     function displayQuestions() {
         // 현재 인덱스부터 다음 세 개의 질문 표시
+        document.getElementById('responses').value = JSON.stringify(responses);
         expressQuestionIndex = currentQuestionIndex - (currentQuestionIndex % 3);
         for (var i = expressQuestionIndex; i < Math.min(expressQuestionIndex + 3, questions.length); i++) {
             var currentQuestion = questions[i];
@@ -487,7 +495,7 @@
 </script>
 
 
-<!-- 제출 버튼 이벤트 발생 -->
+<!-- get과 리다이렉션을 통해 해결. 제출 버튼 이벤트 발생 -->
 <!--
 <script>
     //var responses = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
@@ -508,6 +516,8 @@
     });
 </script>
 -->
+<!-- 새 창을 띄우면서 post문 사용-->
+<!--
 <script>
     // 응답 데이터
     var responseData = {
@@ -552,26 +562,56 @@
     }
 
 </script>
+ -->
+<!--접속과 리다이렉트가 같은 자원에서 처리 됨.-->
+<script>
+    // 응답 데이터
+    // POST 요청 보내기
+    function openFormInNewWindow() {
 
+        axios.post('/result-existing', {
+            mbtiElements: responses
+        })
+            .then(function (response) {
+                console.log(response);
+                // 성공 시 처리
+                //window.location.href = '/result-existing'; // 결과 페이지로 이동
+            })
+            .catch(function (error) {
+                console.error(error);
+                // 실패 시 처리
+            });
+    }
+    //var responses_mark = [false,false,false,false,false,false,false,false,false,false,false,false];
 
+    // responses_mark 값을 hidden input에 설정
+
+</script>
 <!--
 <script>
-    document.querySelector('.submit-button').addEventListener('click', function() {
-        axios.post('/result-old', { mbtiElements: responses })
-            .then(response => {
-                if (response.request.responseURL !== response.config.url) {
-                // 서버에서 리다이렉션된 경우
-                    window.location.href = response.request.responseURL; // 리다이렉션된 페이지로 이동
-                } else {
-                // 리다이렉션되지 않은 경우, 처리할 내용
-                }
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 기본 동작 방지
+
+        var agreeCheckbox = document.getElementById('agreeCheckbox');
+        if (!agreeCheckbox.checked) {
+            alert("약관에 동의해야 합니다.");
+            return;
+        }
+
+        // 서버로 POST 요청 보내기
+        axios.post('/result-existing', {
+            mbtiElements: responses
+        })
+            .then(function (response) {
+                console.log(response);
+                // 성공 시 처리
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .catch(function (error) {
+                console.error(error);
+                // 실패 시 처리
             });
     });
 </script>
 -->
-
 </body>
 </html>
