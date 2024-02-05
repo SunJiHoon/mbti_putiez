@@ -6,6 +6,8 @@
     <title>푸앙 MBTI 테스트!!</title>
     <style>
         body {
+            display: flex;
+            justify-content: center;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -42,11 +44,20 @@
         .start-button:hover {
             background-color: #0056b3;
         }
+        img {
+            max-width: 70%; /* 이미지의 최대 너비를 화면에 맞게 설정합니다. */
+            height: auto; /* 이미지의 높이를 자동으로 조정하여 가로세로 비율을 유지합니다. */
+            display: block; /* 가운데 정렬을 위해 블록 요소로 설정합니다. */
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>푸앙 MBTI 테스트에 온 것을 환영해푸앙!</h1>
+    <img src="./assets/index_puang.png" alt="푸앙이가 자신은 어떤 푸앙이일지 고민하고 있다.">
+<!--    <img src="/d/projects/putiez_mbtipuang/mbti_putiez/mbti_putiez/src/main/resources/assets/index_puang.png" alt="푸앙이가 자신은 어떤 푸앙이일지 고민하고 있다.">-->
+<!--  -->
     <p>나에게 어울리는 푸앙이는 어떤 푸앙이일까? 테스트를 통해 알아봐푸앙!</p>
     <a href="questions/question1.html" class="start-button">테스트 시작하기!</a>
     <a href="questions/questions.html" class="start-button">questions 테스트 시작하기!</a>
