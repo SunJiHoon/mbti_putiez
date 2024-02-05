@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>검사지</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 <style>
     body {
@@ -482,6 +484,22 @@
 
 
 
+</script>
+<!-- 제출 버튼 이벤트 발생 -->
+<script>
+    //var responses = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
+
+    // 제출 버튼 클릭 이벤트 핸들러
+    document.querySelector('.submit-button').addEventListener('click', function() {
+        var url = "/result"; // 보낼 URL
+        axios.post(url, { mbtiElements: responses })
+            .then(function (response) {
+                console.log(response.data); // 응답 처리
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    });
 </script>
 
 
