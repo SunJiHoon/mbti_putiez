@@ -9,7 +9,7 @@ public class ResultController {
     @GetMapping("/result")
     public String resultController(Model model) {
         String value = "INFJ";
-        model.addAttribute("key", value);
+        model.addAttribute("key", "../assets/" + value + ".png");
         //src="../assets/${key}.png"
         return "/results/results.html";
     }
