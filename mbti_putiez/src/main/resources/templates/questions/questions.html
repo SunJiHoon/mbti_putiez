@@ -136,7 +136,7 @@
     <button class="next-button">다음</button>
     <br>
     <!-- 제출 버튼 -->
-    <button class="submit-button" id="myForm">제출</button>
+    <button class="submit-button" id="myForm" onclick="openFormInNewWindow()">제출</button>
 
 
 
@@ -488,6 +488,7 @@
 
 
 <!-- 제출 버튼 이벤트 발생 -->
+<!--
 <script>
     //var responses = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
 
@@ -506,6 +507,53 @@
             });
     });
 </script>
+-->
+<script>
+    // 응답 데이터
+    var responseData = {
+        mbtiElements: responses
+    };
+
+    // 폼 생성 함수
+    function createForm() {
+        var formContainer = document.getElementById('formContainer');
+
+        // 폼 엘리먼트 생성
+        var form = document.createElement('form');
+        form.setAttribute('id', 'myForm');
+        form.setAttribute('action', 'http://localhost:20001/result-old');
+        form.setAttribute('method', 'post');
+
+        // 응답 데이터의 키와 값을 순회하며 각 요소를 폼에 추가
+        for (var key in responseData) {
+            if (responseData.hasOwnProperty(key)) {
+                var value = responseData[key];
+                var input = document.createElement('input');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', key);
+                input.setAttribute('value', JSON.stringify(value));
+                form.appendChild(input);
+            }
+        }
+
+        return form;
+    }
+
+    // 새 창에서 폼 열기
+    function openFormInNewWindow() {
+        var form = createForm();
+
+        // 새 창에 폼 추가
+        var newWindow = window.open('', 'openForm', 'resizeable=true');
+        newWindow.document.body.appendChild(form);
+
+        // 폼 제출
+        form.submit();
+    }
+
+</script>
+
+
 <!--
 <script>
     document.querySelector('.submit-button').addEventListener('click', function() {
