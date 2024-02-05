@@ -136,7 +136,7 @@
     <button class="next-button">다음</button>
     <br>
     <!-- 제출 버튼 -->
-    <button class="submit-button">제출</button>
+    <button class="submit-button" id="myForm">제출</button>
 
 
 
@@ -485,18 +485,20 @@
 
 
 </script>
+
+
 <!-- 제출 버튼 이벤트 발생 -->
 <script>
     //var responses = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
 
     // 제출 버튼 클릭 이벤트 핸들러
     document.querySelector('.submit-button').addEventListener('click', function() {
-        var url = "/result"; // 보낼 URL
+        var url = "/api/whatismbti"; // 보낼 URL
         axios.post(url, { mbtiElements: responses })
             .then(function (response) {
                 console.log(response.data); // 응답 처리
                 // 리다이렉션 수행
-                window.location.href = '/result';
+                window.location.href = '/result' + '?data=' + response.data;
 
             })
             .catch(function (error) {
@@ -504,7 +506,24 @@
             });
     });
 </script>
-
+<!--
+<script>
+    document.querySelector('.submit-button').addEventListener('click', function() {
+        axios.post('/result-old', { mbtiElements: responses })
+            .then(response => {
+                if (response.request.responseURL !== response.config.url) {
+                // 서버에서 리다이렉션된 경우
+                    window.location.href = response.request.responseURL; // 리다이렉션된 페이지로 이동
+                } else {
+                // 리다이렉션되지 않은 경우, 처리할 내용
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+-->
 
 </body>
 </html>
