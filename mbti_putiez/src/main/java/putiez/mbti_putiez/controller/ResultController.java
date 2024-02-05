@@ -22,6 +22,4 @@ public class ResultController {
         model.addAttribute("question", question);
         return "resultTest.html"; // result.html을 반환
     }
-
-
 }
