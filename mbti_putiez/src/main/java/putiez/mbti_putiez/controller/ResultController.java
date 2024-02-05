@@ -31,7 +31,7 @@ public class ResultController {
         int count1 = 0;
         int count2 = 0;
         for (i = 0; i < 3; i++) {
-            if (mbtiElements[i] == "E") {
+            if (mbtiElements[i].equals("E")) {
                 count1++;
             }
             else {
@@ -49,7 +49,7 @@ public class ResultController {
         count1 = 0;
         count2 = 0;
         for (i = 3; i < 6; i++) {
-            if (mbtiElements[i] == "N") {
+            if (mbtiElements[i].equals("N")) {
                 count1++;
             }
             else {
@@ -67,7 +67,7 @@ public class ResultController {
         count1 = 0;
         count2 = 0;
         for (i = 6; i < 9; i++) {
-            if (mbtiElements[i] == "T") {
+            if (mbtiElements[i].equals("T")) {
                 count1++;
             }
             else {
@@ -85,7 +85,7 @@ public class ResultController {
         count1 = 0;
         count2 = 0;
         for (i = 9; i < 12; i++) {
-            if (mbtiElements[i] == "J") {
+            if (mbtiElements[i].equals("J")) {
                 count1++;
             }
             else {
@@ -99,6 +99,8 @@ public class ResultController {
         else {
             value += "P";
         }
+
+        log.info(value);
 
         model.addAttribute("key", "../assets/" + value + ".png");
         //src="../assets/${key}.png"
