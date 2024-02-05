@@ -25,83 +25,38 @@ public class ResultController {
 
         int i;
         String value = "";
-        int count1 = 0;
-        int count2 = 0;
-        for (i = 0; i < 3; i++) {
-            if (mbtiElements[i].equals("E")) {
-                count1++;
-            }
-            else {
-                count2++;
-            }
-        }
-
-        if (count1 > count2) {
-            value += "E";
-        }
-        else {
-            value += "I";
-        }
-
-        count1 = 0;
-        count2 = 0;
-        for (i = 3; i < 6; i++) {
-            if (mbtiElements[i].equals("N")) {
-                count1++;
-            }
-            else {
-                count2++;
-            }
-        }
-
-        if (count1 > count2) {
-            value += "N";
-        }
-        else {
-            value += "S";
-        }
-
-        count1 = 0;
-        count2 = 0;
-        for (i = 6; i < 9; i++) {
-            if (mbtiElements[i].equals("T")) {
-                count1++;
-            }
-            else {
-                count2++;
-            }
-        }
-
-        if (count1 > count2) {
-            value += "T";
-        }
-        else {
-            value += "F";
-        }
-
-        count1 = 0;
-        count2 = 0;
-        for (i = 9; i < 12; i++) {
-            if (mbtiElements[i].equals("J")) {
-                count1++;
-            }
-            else {
-                count2++;
-            }
-        }
-
-        if (count1 > count2) {
-            value += "J";
-        }
-        else {
-            value += "P";
-        }
-
+        value = getString(mbtiElements, value, 0, "E", "I");
+        value = getString(mbtiElements, value, 3, "N", "S");
+        value = getString(mbtiElements, value, 6, "T", "F");
+        value = getString(mbtiElements, value, 9, "J", "P");
+        
         log.info(value);
 
         model.addAttribute("key", "../assets/" + value + ".png");
         //src="../assets/${key}.png"
         return "redirect:/result";
+    }
+
+    private static String getString(String[] mbtiElements, String value, int start, String first, String second) {
+        int i;
+        int count1 = 0;
+        int count2 = 0;
+        for (i = start; i < start + 3; i++) {
+            if (mbtiElements[i].equals(first)) {
+                count1++;
+            }
+            else {
+                count2++;
+            }
+        }
+
+        if (count1 > count2) {
+            value += first;
+        }
+        else {
+            value += second;
+        }
+        return value;
     }
 
     @GetMapping("/result")
@@ -126,3 +81,5 @@ class MBTIDTO {
     private String[] mbtiElements;
 
 }
+
+
