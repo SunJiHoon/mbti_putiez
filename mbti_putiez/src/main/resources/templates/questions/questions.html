@@ -124,7 +124,7 @@
     </div>
 
     <!-- 질문 총 12개-->
-    <h1>질문 1~3번째</h1>
+    <h1 id="questionTitle">질문 1~3번째</h1>
 
     <div id = "questions-form">
 
@@ -366,6 +366,23 @@
             currentQuestionIndex = index * 3;
             //console.log("currentQuestionIndex is now: ", currentQuestionIndex);
             displayQuestions();
+            //h1 title 설정
+            document.getElementById("questionTitle").textContent
+                = "질문 " +  (currentQuestionIndex + 1) + "~" +  (currentQuestionIndex + 3) + "번째"; // 내용 변경
+
+            // 예시: currentIndex가 contents 배열의 마지막 인덱스와 같을 때 "다음" 버튼을 숨김
+            if (currentQuestionIndex === 0) {
+                hidePreviousButton();
+            } else {
+                showPreviousButton();
+            }
+            if (currentQuestionIndex === questions.length - 1 * 3) {
+                hideNextButton();
+                showSubmitButton();
+            } else {
+                showNextButton();
+                hideSubmitButton();
+            }
         });
 
 
@@ -426,6 +443,10 @@
             //console.log("currentQuestionIndex is now: ", currentQuestionIndex);
             updateContent();
         }
+        //h1 title 설정
+        document.getElementById("questionTitle").textContent
+                = "질문 " +  (currentQuestionIndex + 1) + "~" +  (currentQuestionIndex + 3) + "번째"; // 내용 변경
+
         // 예시: currentIndex가 contents 배열의 마지막 인덱스와 같을 때 "다음" 버튼을 숨김
         if (currentQuestionIndex === 0) {
             hidePreviousButton();
@@ -445,6 +466,10 @@
     document.querySelector('.next-button').addEventListener('click', function() {
         if (currentQuestionIndex < questions.length - (1 * 3)) {
             currentQuestionIndex += 3;
+            //h1 title 설정
+            document.getElementById("questionTitle").textContent
+                = "질문 " +  (currentQuestionIndex + 1) + "~" +  (currentQuestionIndex + 3) + "번째"; // 내용 변경
+
             // 예시: currentIndex가 contents 배열의 마지막 인덱스와 같을 때 "다음" 버튼을 숨김
             if (currentQuestionIndex === 0) {
                 hidePreviousButton();
