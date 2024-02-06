@@ -18,7 +18,7 @@ public class MbtiPutiezApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:20001", "http://m.tongtongtripmap.com:80",
+						.allowedOrigins("http://localhost:20001", "http://mbti.putiez.com:443",
 								"http://m.tongtongtripmap.com:8080", "https://m.tongtongtripmap.com:443"
 								, "http://m.tongtongtripmap.com", "https://m.tongtongtripmap.com")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTION")
