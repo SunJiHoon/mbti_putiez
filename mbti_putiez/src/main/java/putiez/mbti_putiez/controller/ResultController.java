@@ -29,7 +29,7 @@ public class ResultController {
         value = getString(mbtiElements, value, 3, "N", "S");
         value = getString(mbtiElements, value, 6, "T", "F");
         value = getString(mbtiElements, value, 9, "J", "P");
-        
+
         log.info(value);
 
         model.addAttribute("key", "../assets/" + value + ".png");
