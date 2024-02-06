@@ -18,6 +18,7 @@ import java.util.Map;
 @Controller
 @Slf4j
 public class ResultController {
+    /*
     @GetMapping("/questions/questions")
     public String resultController() {
         return "questions/questions";
@@ -27,7 +28,7 @@ public class ResultController {
         model.addAttribute("key", "../assets/" + value + ".png");
         return "/results/results.html";
     }
-
+*/
 }
 
 

@@ -20,7 +20,8 @@ public class RCExistignForm {
     @GetMapping("/result-existing")
     public String showResultPage() {
         // 결과 페이지 보여주기
-        return "/questions/questions.html";
+        //return "/questions/questions.html";
+        return "questions/questions";
     }
     @PostMapping("/result-existing")
     public String resultController(@RequestParam Map<String, String> formData
@@ -56,9 +57,8 @@ public class RCExistignForm {
         log.info(value);
 
         model.addAttribute("key", "../assets/" + value + ".png");
-        //src="../assets/${key}.png"
-        return "/results/results.html";
-        //return "redirect:/result-old";
+        //return "/results/results.html";
+        return "results/results";
     }
 
     private static String getString(String[] mbtiElements, String value, int start, String first, String second) {
