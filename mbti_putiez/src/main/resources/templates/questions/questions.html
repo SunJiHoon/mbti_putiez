@@ -60,6 +60,7 @@
         display: inline-block;
         padding: 10px 20px;
         background-color: #007bff;
+        /*background-color: #ff7bff;*/
         color: #fff;
         border-radius: 5px;
         cursor: pointer;
@@ -135,15 +136,17 @@
     <!-- 다음 버튼 -->
     <button class="next-button">다음</button>
     <br>
-    <!-- 제출 버튼 -->
-    <button class="submit-button" id="myForm" onclick="openFormInNewWindow()">제출</button>
 
+    <!-- 제출 버튼 -->
+    <!--
+    <button class="submit-button" id="myForm" onclick="openFormInNewWindow()">제출</button>
+    -->
     <!--테스트용 제출 버튼-->
     <form id="registerForm" action="/result-existing" method="post">
         <label>
             <input type="hidden" name="mbtiElements" id="responses">
         </label>
-        <input type="submit" value="다음 단계" />
+        <input class="submit-button" type="submit" value="제출" />
     </form>
 
 
@@ -284,7 +287,8 @@
             // 답변 선택지 제공
             currentQuestion.options.forEach(function(option, index) {
                 //console.log(i);
-
+                //여기선 i가 질문지 인덱스와 같다.
+                //만약 i번째가 resposense의 i와 같다면 진하게 처리를하면 될 것 같다.
                 var optionDiv = document.createElement('div');
                 optionDiv.classList.add('option');
 
@@ -300,6 +304,11 @@
 
                 optionDiv.appendChild(radioButton);
                 optionDiv.appendChild(label);
+
+                // 만약 i번째 선택지가 responses 배열의 i번째 요소와 같다면 배경색을 변경하여 강조
+                if (responses[i] === option.value) {
+                    label.style.backgroundColor = "#0056b3"; // 클릭한 버튼의 label 텍스트 색을 초록색으로 변경합니다.
+                }
 
                 radioButton.addEventListener('click', function(event) {
                     //i번째에 대한 속성이 추가되고 있다.
@@ -454,6 +463,7 @@
     });
 
     // 내용 업데이트 함수
+
     function updateContent() {
         questionContainer.innerHTML = ''; // 현재 질문 삭제
         answerContainer.innerHTML = ''; // 현재 답변 삭제
@@ -479,6 +489,7 @@
     function showPreviousButton() {
         document.querySelector('.prev-button').style.display = 'inline'; // 원래 display 값으로 변경
     }
+
 
     // 특정 조건이 true일 때 "제출" 버튼을 숨기는 함수
     function hideSubmitButton() {
@@ -613,5 +624,29 @@
     });
 </script>
 -->
+<script>
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+        // mbtiElements 배열
+        //var mbtiElements = ["x", "x", "x","x", "x", "x","x", "x", "x","x", "x", "x"];
+
+        // 검사할 특정 문자
+        var targetCharacter = "x";
+
+        var unmarkedList = [];
+        // mbtiElements 배열에 특정 문자가 포함되어 있는지 확인
+        var isCharacterPresent = responses.includes(targetCharacter);
+        for (var i = 0; i < responses.length; i++){
+            if (responses.at(i) === "x"){
+                unmarkedList.push(i + 1);
+            }
+        }
+        // 특정 문자가 포함되어 있다면 제출을 막고 경고 메시지를 표시
+        if (isCharacterPresent) {
+            event.preventDefault(); // 제출 막기
+            alert("설문 조사에 답변 되지 않은 항목이 있어서 제출할 수 없습니다.\n" +
+                unmarkedList + "번 항목에 응답이 필요합니다.");
+        }
+    });
+</script>
 </body>
 </html>
