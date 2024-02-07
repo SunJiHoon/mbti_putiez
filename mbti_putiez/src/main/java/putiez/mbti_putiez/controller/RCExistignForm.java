@@ -27,11 +27,12 @@ public class RCExistignForm {
         model.addAttribute("consent", consent);
         if(consent.equals("yes")){
             model.addAttribute("department", department);
+            return "questions/questions_ver2";
         }
         else{
             model.addAttribute("department", "학과 정보 x");
+            return "redirect:/";
         }
-        return "questions/questions_ver2";
     }
     @GetMapping("/questionnaire")
     public String showMeQuestionnaire_directly(Model model) {
@@ -51,6 +52,12 @@ public class RCExistignForm {
                                    //@RequestBody MBTIDTO_old mbtiDTO,
                                    ,HttpServletRequest request
             , Model model) {
+        //consent정보와 department정보 확인
+        String consent = formData.get("consent");
+        String department = formData.get("department");
+        log.info(consent);
+        log.info(department);
+
 
         String str = formData.get("mbtiElements");
         log.info(str);

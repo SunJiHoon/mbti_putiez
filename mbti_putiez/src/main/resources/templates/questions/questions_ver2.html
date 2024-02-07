@@ -145,6 +145,8 @@
     <form id="registerForm" action="/result-existing" method="post">
         <label>
             <input type="hidden" name="mbtiElements" id="responses">
+            <input type="hidden" name="consent" id="consent" th:value="${consent}">
+            <input type="hidden" name="department" id="department" th:value="${department}">
         </label>
         <input class="submit-button" type="submit" value="제출" />
     </form>
@@ -283,6 +285,8 @@
     function displayQuestions() {
         // 현재 인덱스부터 다음 세 개의 질문 표시
         document.getElementById('responses').value = JSON.stringify(responses);
+        //document.getElementById('consent').value =
+        // document.getElementById('department').value
         expressQuestionIndex = currentQuestionIndex - (currentQuestionIndex % 3);
         for (var i = expressQuestionIndex; i < Math.min(expressQuestionIndex + 3, questions.length); i++) {
             var currentQuestion = questions[i];
@@ -681,5 +685,6 @@
         }
     });
 </script>
+
 </body>
 </html>
