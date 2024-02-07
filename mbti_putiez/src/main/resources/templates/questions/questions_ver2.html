@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검사지</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+    .round-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #3498db;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 50px; /* 버튼 내부의 텍스트를 버튼 가운데에 위치시킵니다. */
+        cursor: pointer;
+        margin: 10px;
+        display: inline-block;
+    }
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    .questions {
+        margin-bottom: 20px;
+    }
+    .options {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+        gap: 20px;
+    }
+    .option {
+        margin-bottom: 10px;
+    }
+    .option input[type="radio"] {
+        display: none;
+    }
+    .option label {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        /*background-color: #ff7bff;*/
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .option label:hover {
+        background-color: #0056b3;
+    }
+    .prev-button{
+        width: 100px; /* 버튼 너비 */
+        height: 50px; /* 버튼 높이 */
+        background-color: #4CAF50; /* 배경색 */
+        color: white; /* 글자색 */
+        border: none; /* 테두리 없음 */
+        border-radius: 5px; /* 테두리 반경 */
+        font-size: 16px; /* 글꼴 크기 */
+        cursor: pointer; /* 커서 타입 */
+        margin: 10px; /* 마진 */
+
+    }
+    .next-button {
+        width: 100px; /* 버튼 너비 */
+        height: 50px; /* 버튼 높이 */
+        background-color: #4CAF50; /* 배경색 */
+        color: white; /* 글자색 */
+        border: none; /* 테두리 없음 */
+        border-radius: 5px; /* 테두리 반경 */
+        font-size: 16px; /* 글꼴 크기 */
+        cursor: pointer; /* 커서 타입 */
+        margin: 10px; /* 마진 */
+    }
+    .submit-button {
+        background-color: #7CFC00; /* 연두색 */
+        color: white; /* 글자색 */
+        border: none; /* 테두리 없음 */
+        padding: 15px 25px; /* 내부 여백을 조정하여 버튼 크기를 키웁니다 */
+        text-align: center; /* 가운데 정렬 */
+        text-decoration: none; /* 밑줄 없음 */
+        display: inline-block; /* 인라인 블록 요소 */
+        font-size: 16px; /* 글꼴 크기 */
+        cursor: pointer; /* 커서 타입 */
+        border-radius: 5px; /* 테두리 반경 */
+    }
+    .submit-button:hover {
+        background-color: #32CD32; /* 마우스 호버 시 연두색 변경 */
+    }
+
+
+</style>
+
+<body>
+<div class="container">
+    <div id="button-container">
+        <!-- 버튼들이 여기에 동적으로 추가될 예정입니다. -->
+    </div>
+
+    <!-- 응답현황 -->
+    <div id="response-container">
+        <!-- 사용자의 응답현황이 기록되고 표시 됩니다. -->
+
+    </div>
+
+    <!-- 질문 총 12개-->
+    <h1 id="questionTitle">질문 1~3번째</h1>
+
+    <div id = "questions-form">
+
+    </div>
+
+
+    <!-- 이전 버튼 -->
+    <button class="prev-button">이전</button>
+    <!-- 다음 버튼 -->
+    <button class="next-button">다음</button>
+    <br>
+
+    <!-- 제출 버튼 -->
+    <!--
+    <button class="submit-button" id="myForm" onclick="openFormInNewWindow()">제출</button>
+    -->
+    <!--테스트용 제출 버튼-->
+    <form id="registerForm" action="/result-existing" method="post">
+        <label>
+            <input type="hidden" name="mbtiElements" id="responses">
+        </label>
+        <input class="submit-button" type="submit" value="제출" />
+    </form>
+
+    <div>
+        <p style="font-size: smaller; display: inline;"  >개인 정보 제공 및 이용 동의 현황: </p>
+        <p style="font-size: smaller; display: inline;" th:if="${consent != null}" th:text="${consent}"></p>
+        <p style="font-size: smaller; display: inline;" th:unless="${consent != null}" 입력 정보 없음></p>
+        <br>
+        <p style="font-size: smaller; display: inline;">  단과대: </p>
+        <p style="font-size: smaller; display: inline;" th:if="${department != null}" th:text="${department}"></p>
+        <p style="font-size: smaller; display: inline;" th:unless="${department != null}" 입력 정보 없음></p>
+    </div>
+</div>
+
+
+
+<!-- JavaScript 코드 -->
+<script>
+    var questionsForm = document.getElementById('questions-form');
+
+    // question-container 생성
+    var questionContainer = document.createElement('div');
+    questionContainer.id = "questions";
+    questionsForm.appendChild(questionContainer);
+
+    // answer-container 생성
+    var answerContainer = document.createElement('div');
+    answerContainer.id = "options";
+    questionsForm.appendChild(answerContainer);
+
+    var questions = [
+        //1~3
+        {
+            question: "질문1 드디어 나도 중앙대학교 신입생! 처음으로 신입생 정모에 참석했는데, 처음보는 같은 과 동기들이 많아!",
+            options: [
+                { value: "E", label: "우리 친해지자! 먼저 말을 걸어본다." },
+                { value: "I", label: "말을 못 걸겠어..! 먼저 다가와주기를 기다린다." }
+            ]
+        }
+        ,
+        {
+            question: "질문2 개강 후 처음으로 수업을 듣고 나니까 점심 먹을 시간이 됐어. 그런데 정모 때 만났던 친구들이 보여!",
+            options: [
+                { value: "E", label: "여러 명이서 다같이 밥 먹으러 가자!" },
+                { value: "I", label: "나랑 마음 맞는 친구 한 명이면 충분해..!" }
+            ]
+        }
+        ,
+        {
+            question: "질문3 잔디 광장에서 동아리 박람회를 하네? 중앙동아리들을 둘러보자!",
+            options: [
+                { value: "I", label: "동아리는 하나면 충분해!" },
+                { value: "E", label: "이것도 재밌어 보이고, 저것도 재밌어 보여! 다 들어갈래!" }
+            ]
+        }
+        ,
+        //4~6
+        {
+            question: "질문4 310관 1층에서 중앙대학교의 마스코트 푸앙이를 발견했어! 50년 동안 타임캡슐 속에서 잠들어 있다가 깨어난 청룡이래.",
+            options: [
+                { value: "S", label: "귀엽다... 엄청 오래 잠들어 있었네..." },
+                { value: "N", label: "50년만에 나왔으니까 세상이 신기했겠다! 푸앙이의 이야기가 더 궁금해!" }
+            ]
+        }
+        ,
+        {
+            question: "질문5 오늘은 엠티가는 날! 긴장 반, 설렘 반으로 출발했어!",
+            options: [
+                { value: "S", label: "엠티가면 레크레이션하고, 술게임 하려나...?" },
+                { value: "N", label: "술게임하다가 내가 계속 걸리면 어떡하지? 나 완전 취해버리는거 아니야??" }
+            ]
+        }
+        ,
+        {
+            question: "질문6 벌써 중간고사 기간이 다가왔어! 대학교에서 처음 보는 시험이라 긴장돼... 근데 대학교에서는 시험을 다 보면 먼저 나가도 된다고?",
+            options: [
+                { value: "N", label: "진짜일까? 교수님이 부르는거 아니야...? 점수 깎이면 어떡하지..." },
+                { value: "S", label: "다 풀면 그냥 나가면 되는구나... 나도 그렇게 해야지!" }
+            ]
+        }
+        ,
+        //7~9
+        {
+            question: "질문7 중앙대의 명물 카우버거! 친구와 카우버거에 왔는데, 동기가 내가 맛있어 할 것 같다고 햄버거 하나를 추천해줬어.",
+            options: [
+                { value: "T", label: "어...? 고마워... (내가 좋아하는지 어떻게 알았지?" },
+                { value: "F", label: "나를 생각해서 추천해주다니! 너무 고마워!" }
+            ]
+        }
+        ,
+        {
+            question: "질문8 중앙대학교의 봄축제, LUCAUS가 열리고 있어! 부스가 엄청 많은데, 저쪽 부스에서 한 번 체험해보라고 하네...? 다음 수업이 얼마 안남았는데...",
+            options: [
+                { value: "T", label: "지금 바빠서 다음에 해볼게요!" },
+                { value: "F", label: "이거 하나만 하고 갈까...? 거절하기 죄송하네..." }
+            ]
+        }
+        ,
+        {
+            question: "질문9 친구가 과제를 했는데, 점수가 잘 나오지 않았나 봐... 어떻게 하지?",
+            options: [
+                { value: "F", label: "열심히 했는데 속상했겠다... 같이 맛있는 거 먹으러 갈까?" },
+                { value: "T", label: "어떤게 잘 안됐어? 내가 도와줄게!" }
+            ]
+        }
+        ,
+        //10~12
+        {
+            question: "질문10 기말고사 기간이라서 학생회에서 간식 행사를 한대!",
+            options: [
+                { value: "J", label: "간식 행사가 6시 반이니까, 4시에 수업 끝나고 도서관에서 공부하다가 가면 되겠다!" },
+                { value: "P", label: "몇시였는지 잘 기억은 안나지만 대충 저녁에 가면 되겠지~" }
+            ]
+        }
+        ,
+        {
+            question: "질문11 기말고사가 끝나고 여름방학! 이번 방학 계획을 세워볼까?",
+            options: [
+                { value: "J", label: "다음 학기 예습도 하고, 친구들이랑 여행 갈 일정도 잡아야지!" },
+                { value: "P", label: "방학이니까 마음가는대로 살래!" }
+            ]
+        }
+        ,
+        {
+            question: "질문12 다음 학기 준비를 위한 수강신청! 시간표는 짜뒀어?",
+            options: [
+                { value: "P", label: "장바구니 할 때 짤래! 지금 짜기는 귀찮아~" },
+                { value: "J", label: "들어야 할 과목도 미리 체크하고, 다 짰어!" }
+            ]
+        }
+    ];
+
+    var currentQuestionIndex = 0;
+
+    function displayQuestions() {
+        // 현재 인덱스부터 다음 세 개의 질문 표시
+        document.getElementById('responses').value = JSON.stringify(responses);
+        expressQuestionIndex = currentQuestionIndex - (currentQuestionIndex % 3);
+        for (var i = expressQuestionIndex; i < Math.min(expressQuestionIndex + 3, questions.length); i++) {
+            var currentQuestion = questions[i];
+
+            // 질문 표시
+            var questionElement = document.createElement('p');
+            questionElement.textContent = currentQuestion.question;
+            questionContainer.appendChild(questionElement);
+
+            // 답변 선택지 제공
+            currentQuestion.options.forEach(function(option, index) {
+                //console.log(i);
+                //여기선 i가 질문지 인덱스와 같다.
+                //만약 i번째가 resposense의 i와 같다면 진하게 처리를하면 될 것 같다.
+                var optionDiv = document.createElement('div');
+                optionDiv.classList.add('option');
+
+                var radioButton = document.createElement('input');
+                radioButton.type = "radio";
+                radioButton.id = "" + i + "/" + Math.random();//"option" + index;//option.id;
+                radioButton.name = "answer";
+                radioButton.value = option.value; // 변경된 value 값 설정
+
+                var label = document.createElement('label');
+                label.setAttribute('for', radioButton.id);
+                label.textContent = option.label; // 변경된 label 값 설정
+
+                optionDiv.appendChild(radioButton);
+                optionDiv.appendChild(label);
+
+                // 만약 i번째 선택지가 responses 배열의 i번째 요소와 같다면 배경색을 변경하여 강조
+                if (responses[i] === option.value) {
+                    label.style.backgroundColor = "#0056b3"; // 클릭한 버튼의 label 텍스트 색을 초록색으로 변경합니다.
+                }
+
+                radioButton.addEventListener('click', function(event) {
+                    //i번째에 대한 속성이 추가되고 있다.
+                    var str = event.target.id;
+                    var parsedId = str.split("/")[0];
+
+                    var selectedValue = event.target.value; // 사용자가 선택한 값
+                    console.log(parsedId);
+                    console.log(selectedValue);
+
+                    updateResponse(parsedId, selectedValue);
+
+                    console.log(responses);
+
+
+                    //var answerElement = document.createElement('p');
+                    //answerElement.textContent = "내 선택: " + option.label;
+                    //answerContainer.appendChild(answerElement);
+
+                    // 다음 질문 표시
+                    questionContainer.innerHTML = ''; // 현재 질문 삭제
+                    answerContainer.innerHTML = ''; // 현재 답변 삭제
+
+                    expressQuestionIndex++;
+                    if (expressQuestionIndex < questions.length) {
+                        displayQuestions(); // 다음 질문 표시
+                    } else {
+                        var endMessage = document.createElement('p');
+                        endMessage.textContent = "질문이 끝났습니다.";
+                        questionContainer.appendChild(endMessage);
+                    }
+                });
+
+                questionContainer.appendChild(optionDiv);
+            });
+
+        }
+    }
+
+    // 초기 질문 표시
+    displayQuestions();
+
+    var buttonContainer = document.getElementById('button-container');
+    var buttonTexts = ["1~3", "4~6", "7~9", "10~12"];
+    currentQuestionIndex = 0; // 전역 변수로 선언
+
+    buttonTexts.forEach(function(text, index) {
+        var button = document.createElement('div');
+        button.classList.add('round-button');
+        button.textContent = text;
+        button.addEventListener('click', function() {
+            // 버튼 클릭 시 전역 변수인 currentQuestionIndex를 해당 버튼의 인덱스로 변경
+            questionContainer.innerHTML = ''; // 현재 질문 삭제
+            answerContainer.innerHTML = ''; // 현재 답변 삭제
+            currentQuestionIndex = index * 3;
+            //console.log("currentQuestionIndex is now: ", currentQuestionIndex);
+            displayQuestions();
+            //h1 title 설정
+            document.getElementById("questionTitle").textContent
+                = "질문 " +  (currentQuestionIndex + 1) + "~" +  (currentQuestionIndex + 3) + "번째"; // 내용 변경
+
+            // 예시: currentIndex가 contents 배열의 마지막 인덱스와 같을 때 "다음" 버튼을 숨김
+            if (currentQuestionIndex === 0) {
+                hidePreviousButton();
+            } else {
+                showPreviousButton();
+            }
+            if (currentQuestionIndex === questions.length - 1 * 3) {
+                hideNextButton();
+                showSubmitButton();
+            } else {
+                showNextButton();
+                hideSubmitButton();
+            }
+        });
+
+
+        buttonContainer.appendChild(button);
+    });
+
+</script>
+
+<script>
+    var responseContainer = document.getElementById('response-container');
+
+    // 1~12번 문항에 대한 응답을 저장하는 배열
+    var responses_mark = [false,false,false,false,false,false,false,false,false,false,false,false];
+    var responses = ['x','x','x','x','x','x','x','x','x','x','x','x'];
+
+    // 사용자 응답을 각 문항에 따라 업데이트하는 함수
+    function updateResponse(currentQuestionIndex, answer) {
+        responses_mark[currentQuestionIndex] = true;
+        responses[currentQuestionIndex] = answer;
+        displayResponse();
+    }
+
+    // 응답 현황을 표시하는 함수
+    function displayResponse() {
+        // 이전에 표시된 응답을 지웁니다.
+        responseContainer.innerHTML = '';
+
+        // 각 문항에 대한 응답을 표시합니다.
+        for (var i = 0; i < responses.length; i++) {
+            if (responses_mark === false){
+                var responseParagraph = document.createElement('p');
+                responseParagraph.textContent = (i + 1) + "번 문항: " + (responses[i] ? responses[i] : "아직 응답하지 않음");
+                responseContainer.appendChild(responseParagraph);
+            }
+        }
+    }
+    // 초기 응답 현황 표시
+    displayResponse();
+</script>
+<script>
+    // 예시: currentIndex가 contents 배열의 마지막 인덱스와 같을 때 "다음" 버튼을 숨김
+    if (currentQuestionIndex === 0) {
+        hidePreviousButton();
+    } else {
+        showPreviousButton();
+    }
+    if (currentQuestionIndex === questions.length - 1 * 3) {
+        hideNextButton();
+        showSubmitButton();
+    } else {
+        showNextButton();
+        hideSubmitButton();
+    }
+    // 이전 버튼 클릭 이벤트 핸들러
+    document.querySelector('.prev-button').addEventListener('click', function() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex -= 3;
+            //console.log("currentQuestionIndex is now: ", currentQuestionIndex);
+            updateContent();
+        }
+        //h1 title 설정
+        document.getElementById("questionTitle").textContent
+                = "질문 " +  (currentQuestionIndex + 1) + "~" +  (currentQuestionIndex + 3) + "번째"; // 내용 변경
+
+        // 예시: currentIndex가 contents 배열의 마지막 인덱스와 같을 때 "다음" 버튼을 숨김
+        if (currentQuestionIndex === 0) {
+            hidePreviousButton();
+        } else {
+            showPreviousButton();
+        }
+        if (currentQuestionIndex === questions.length - 1 * 3) {
+            hideNextButton();
+            showSubmitButton();
+        } else {
+            showNextButton();
+            hideSubmitButton();
+        }
+    });
+
+    // 다음 버튼 클릭 이벤트 핸들러
+    document.querySelector('.next-button').addEventListener('click', function() {
+        if (currentQuestionIndex < questions.length - (1 * 3)) {
+            currentQuestionIndex += 3;
+            //h1 title 설정
+            document.getElementById("questionTitle").textContent
+                = "질문 " +  (currentQuestionIndex + 1) + "~" +  (currentQuestionIndex + 3) + "번째"; // 내용 변경
+
+            // 예시: currentIndex가 contents 배열의 마지막 인덱스와 같을 때 "다음" 버튼을 숨김
+            if (currentQuestionIndex === 0) {
+                hidePreviousButton();
+            } else {
+                showPreviousButton();
+            }
+            if (currentQuestionIndex === questions.length - 1 * 3) {
+                hideNextButton();
+                showSubmitButton();
+            } else {
+                showNextButton();
+                hideSubmitButton();
+            }
+            updateContent();
+        }
+    });
+
+    // 내용 업데이트 함수
+
+    function updateContent() {
+        questionContainer.innerHTML = ''; // 현재 질문 삭제
+        answerContainer.innerHTML = ''; // 현재 답변 삭제
+        displayQuestions();
+    }
+
+    // 특정 조건이 true일 때 "이전" 버튼을 숨기는 함수
+    function hideNextButton() {
+        document.querySelector('.next-button').style.display = 'none';
+    }
+
+    // 특정 조건이 false일 때 "이전" 버튼을 보이게 하는 함수
+    function showNextButton() {
+        document.querySelector('.next-button').style.display = 'inline'; // 원래 display 값으로 변경
+    }
+
+    // 특정 조건이 true일 때 "다음" 버튼을 숨기는 함수
+    function hidePreviousButton() {
+        document.querySelector('.prev-button').style.display = 'none';
+    }
+
+    // 특정 조건이 false일 때 "다음" 버튼을 보이게 하는 함수
+    function showPreviousButton() {
+        document.querySelector('.prev-button').style.display = 'inline'; // 원래 display 값으로 변경
+    }
+
+
+    // 특정 조건이 true일 때 "제출" 버튼을 숨기는 함수
+    function hideSubmitButton() {
+        document.querySelector('.submit-button').style.display = 'none';
+    }
+
+    // 특정 조건이 false일 때 "제출" 버튼을 보이게 하는 함수
+    function showSubmitButton() {
+        document.querySelector('.submit-button').style.display = 'inline'; // 원래 display 값으로 변경
+    }
+
+
+
+</script>
+
+
+<!-- get과 리다이렉션을 통해 해결. 제출 버튼 이벤트 발생 -->
+<!--
+<script>
+    //var responses = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
+
+    // 제출 버튼 클릭 이벤트 핸들러
+    document.querySelector('.submit-button').addEventListener('click', function() {
+        var url = "/api/whatismbti"; // 보낼 URL
+        axios.post(url, { mbtiElements: responses })
+            .then(function (response) {
+                console.log(response.data); // 응답 처리
+                // 리다이렉션 수행
+                window.location.href = '/result' + '?data=' + response.data;
+
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    });
+</script>
+-->
+<!-- 새 창을 띄우면서 post문 사용-->
+<!--
+<script>
+    // 응답 데이터
+    var responseData = {
+        mbtiElements: responses
+    };
+
+    // 폼 생성 함수
+    function createForm() {
+        var formContainer = document.getElementById('formContainer');
+
+        // 폼 엘리먼트 생성
+        var form = document.createElement('form');
+        form.setAttribute('id', 'myForm');
+        form.setAttribute('action', 'http://localhost:20001/result-old');
+        form.setAttribute('method', 'post');
+
+        // 응답 데이터의 키와 값을 순회하며 각 요소를 폼에 추가
+        for (var key in responseData) {
+            if (responseData.hasOwnProperty(key)) {
+                var value = responseData[key];
+                var input = document.createElement('input');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', key);
+                input.setAttribute('value', JSON.stringify(value));
+                form.appendChild(input);
+            }
+        }
+
+        return form;
+    }
+
+    // 새 창에서 폼 열기
+    function openFormInNewWindow() {
+        var form = createForm();
+
+        // 새 창에 폼 추가
+        var newWindow = window.open('', 'openForm', 'resizeable=true');
+        newWindow.document.body.appendChild(form);
+
+        // 폼 제출
+        form.submit();
+    }
+
+</script>
+ -->
+<!--접속과 리다이렉트가 같은 자원에서 처리 됨.-->
+<script>
+    // 응답 데이터
+    // POST 요청 보내기
+    function openFormInNewWindow() {
+
+        axios.post('/result-existing', {
+            mbtiElements: responses
+        })
+            .then(function (response) {
+                console.log(response);
+                // 성공 시 처리
+                //window.location.href = '/result-existing'; // 결과 페이지로 이동
+            })
+            .catch(function (error) {
+                console.error(error);
+                // 실패 시 처리
+            });
+    }
+    //var responses_mark = [false,false,false,false,false,false,false,false,false,false,false,false];
+
+    // responses_mark 값을 hidden input에 설정
+
+</script>
+<!--
+<script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 기본 동작 방지
+
+        var agreeCheckbox = document.getElementById('agreeCheckbox');
+        if (!agreeCheckbox.checked) {
+            alert("약관에 동의해야 합니다.");
+            return;
+        }
+
+        // 서버로 POST 요청 보내기
+        axios.post('/result-existing', {
+            mbtiElements: responses
+        })
+            .then(function (response) {
+                console.log(response);
+                // 성공 시 처리
+            })
+            .catch(function (error) {
+                console.error(error);
+                // 실패 시 처리
+            });
+    });
+</script>
+-->
+<script>
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+        // mbtiElements 배열
+        //var mbtiElements = ["x", "x", "x","x", "x", "x","x", "x", "x","x", "x", "x"];
+
+        // 검사할 특정 문자
+        var targetCharacter = "x";
+
+        var unmarkedList = [];
+        // mbtiElements 배열에 특정 문자가 포함되어 있는지 확인
+        var isCharacterPresent = responses.includes(targetCharacter);
+        for (var i = 0; i < responses.length; i++){
+            if (responses.at(i) === "x"){
+                unmarkedList.push(i + 1);
+            }
+        }
+        // 특정 문자가 포함되어 있다면 제출을 막고 경고 메시지를 표시
+        if (isCharacterPresent) {
+            event.preventDefault(); // 제출 막기
+            alert("설문 조사에 답변 되지 않은 항목이 있어서 제출할 수 없습니다.\n" +
+                unmarkedList + "번 항목에 응답이 필요합니다.");
+        }
+    });
+</script>
+</body>
+</html>

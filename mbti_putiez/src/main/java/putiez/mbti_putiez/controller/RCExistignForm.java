@@ -16,8 +16,31 @@ import java.util.Map;
 @Controller
 @Slf4j
 public class RCExistignForm {
+    @GetMapping("/privacy-policy")
+    public String showPrivacyPolicy(){
+        return "privacy/privacy";
+    }
+    @PostMapping("/questionnaire")
+    public String showMeQuestionnaire(@RequestParam(name = "consent") String consent,
+                                      @RequestParam(name = "department") String department,
+                                      Model model){
+        model.addAttribute("consent", consent);
+        if(consent.equals("yes")){
+            model.addAttribute("department", department);
+        }
+        else{
+            model.addAttribute("department", "학과 정보 x");
+        }
+        return "questions/questions_ver2";
+    }
+    @GetMapping("/questionnaire")
+    public String showMeQuestionnaire_directly(Model model) {
+        model.addAttribute("consent", "no");
+        model.addAttribute("department", "학과 정보 x");
+        return "questions/questions_ver2";
+    }
 
-    @GetMapping("/result-existing")
+    //@GetMapping("/result-existing")
     public String showResultPage() {
         // 결과 페이지 보여주기
         //return "/questions/questions.html";
