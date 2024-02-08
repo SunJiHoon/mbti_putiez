@@ -57,6 +57,9 @@ public class RCExistignForm {
         String department = formData.get("department");
         log.info(consent);
         log.info(department);
+        if (consent.equals("yes")){
+
+        }
 
 
         String str = formData.get("mbtiElements");
