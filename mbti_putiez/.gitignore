@@ -1,5 +1,7 @@
 #db 비밀번호가 들어간다.
 src/main/resources/application.properties
+src/main/resources/env.json
+
 
 HELP.md
 .gradle
