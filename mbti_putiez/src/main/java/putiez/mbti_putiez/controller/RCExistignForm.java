@@ -3,19 +3,29 @@ package putiez.mbti_putiez.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import putiez.mbti_putiez.entity.visitInfo;
+import putiez.mbti_putiez.repository.mariaJPA;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Map;
 
 @Controller
 @Slf4j
 public class RCExistignForm {
+    mariaJPA mariajpa;
+    public RCExistignForm(mariaJPA mariajpa) {
+        this.mariajpa = mariajpa;
+    }
+
+
     @GetMapping("/privacy-policy")
     public String showPrivacyPolicy(){
         return "privacy/privacy";
@@ -57,10 +67,6 @@ public class RCExistignForm {
         String department = formData.get("department");
         log.info(consent);
         log.info(department);
-        if (consent.equals("yes")){
-
-        }
-
 
         String str = formData.get("mbtiElements");
         log.info(str);
@@ -89,6 +95,14 @@ public class RCExistignForm {
 
         log.info(value);
 
+        if (consent.equals("yes")){
+            visitInfo visitinfo = new visitInfo();
+            visitinfo.setMbti(value);
+            visitinfo.setDepartment(department);
+            visitinfo.setCreatetime(new Timestamp(System.currentTimeMillis()));
+            mariajpa .save(visitinfo);
+        }
+
         model.addAttribute("key", "../assets/" + value + ".png");
         //return "/results/results.html";
         return "results/results";
@@ -115,10 +129,6 @@ public class RCExistignForm {
         }
         return value;
     }
-
-
-
-
 }
 
 @Data
