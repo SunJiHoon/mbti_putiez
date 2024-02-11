@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @Slf4j
-public class TestController {
+public class TestController_old {
     //api.key.KAKAO_API_KEY
     @Value("${api.key.KAKAO_API_KEY}")
     private String kakaoapikey;
