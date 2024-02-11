@@ -12,15 +12,18 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f4f4f4;
+        background-image: url('http://localhost:20001/assets/background.jpg');
+        background-size: auto;
+        background-repeat: repeat;
+        background-position: center;
         text-align: center;
     }
     .round-button {
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: #3498db;
-        color: #ffffff;
+        background-color: #AECDFF;
+        color: #252996;
         font-size: 16px;
         font-weight: bold;
         text-align: center;
@@ -59,7 +62,7 @@
     .option label {
         display: inline-block;
         padding: 10px 20px;
-        background-color: #007bff;
+        background-color: #6982F3;
         /*background-color: #ff7bff;*/
         color: #fff;
         border-radius: 5px;
@@ -67,12 +70,12 @@
         transition: background-color 0.3s;
     }
     .option label:hover {
-        background-color: #0056b3;
+        background-color: #3A56D2;
     }
     .prev-button{
         width: 100px; /* 버튼 너비 */
         height: 50px; /* 버튼 높이 */
-        background-color: #4CAF50; /* 배경색 */
+        background-color: #0034E2; /* 배경색 */
         color: white; /* 글자색 */
         border: none; /* 테두리 없음 */
         border-radius: 5px; /* 테두리 반경 */
@@ -84,7 +87,7 @@
     .next-button {
         width: 100px; /* 버튼 너비 */
         height: 50px; /* 버튼 높이 */
-        background-color: #4CAF50; /* 배경색 */
+        background-color: #0034E2; /* 배경색 */
         color: white; /* 글자색 */
         border: none; /* 테두리 없음 */
         border-radius: 5px; /* 테두리 반경 */
@@ -93,7 +96,7 @@
         margin: 10px; /* 마진 */
     }
     .submit-button {
-        background-color: #7CFC00; /* 연두색 */
+        background-color: #FF909F; /* 연두색 */
         color: white; /* 글자색 */
         border: none; /* 테두리 없음 */
         padding: 15px 25px; /* 내부 여백을 조정하여 버튼 크기를 키웁니다 */
@@ -105,7 +108,7 @@
         border-radius: 5px; /* 테두리 반경 */
     }
     .submit-button:hover {
-        background-color: #32CD32; /* 마우스 호버 시 연두색 변경 */
+        background-color: #FF6176; /* 마우스 호버 시 연두색 변경 */
     }
 
 
@@ -319,7 +322,7 @@
 
                 // 만약 i번째 선택지가 responses 배열의 i번째 요소와 같다면 배경색을 변경하여 강조
                 if (responses[i] === option.value) {
-                    label.style.backgroundColor = "#0056b3"; // 클릭한 버튼의 label 텍스트 색을 초록색으로 변경합니다.
+                    label.style.backgroundColor = "#3A56D2"; // 클릭한 버튼의 label 텍스트 색을 초록색으로 변경합니다.
                 }
 
                 radioButton.addEventListener('click', function(event) {
