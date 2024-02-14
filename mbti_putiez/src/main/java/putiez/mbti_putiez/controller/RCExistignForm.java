@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import putiez.mbti_putiez.entity.visitCountInfo;
 import putiez.mbti_putiez.entity.visitInfo;
 import putiez.mbti_putiez.repository.mariaJPA;
+import putiez.mbti_putiez.repository.mariaJPA_visitCountInfo;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +25,10 @@ import java.util.Map;
 @Slf4j
 public class RCExistignForm {
     mariaJPA mariajpa;
-    public RCExistignForm(mariaJPA mariajpa) {
+    mariaJPA_visitCountInfo mariaJPA_visitCountInfo;
+    public RCExistignForm(mariaJPA mariajpa, mariaJPA_visitCountInfo mariaJPA_visitCountInfo) {
         this.mariajpa = mariajpa;
+        this.mariaJPA_visitCountInfo = mariaJPA_visitCountInfo;
     }
 
 
@@ -100,8 +105,39 @@ public class RCExistignForm {
             visitInfo visitinfo = new visitInfo();
             visitinfo.setMbti(value);
             visitinfo.setDepartment(department);
-            visitinfo.setCreatetime(new Timestamp(System.currentTimeMillis()));
-            mariajpa .save(visitinfo);
+            LocalDateTime adjustedTime = LocalDateTime.now().plusHours(9);//aws상 표준시간+9 필요함.
+            visitinfo.setCreatetime(Timestamp.valueOf(adjustedTime));
+            //visitinfo.setCreatetime(new Timestamp(System.currentTimeMillis()));
+            mariajpa.save(visitinfo);
+
+            visitCountInfo visitCountInfo =mariaJPA_visitCountInfo.findByVisitName("consent_yes");
+            if (visitCountInfo != null) {
+                // 이미 있는 경우 count를 1 증가
+                visitCountInfo.setVisitCount(visitCountInfo.getVisitCount() + 1);
+            } else {
+                // 새로운 객체를 생성하여 추가
+                visitCountInfo = new visitCountInfo();
+                visitCountInfo.setVisitName("consent_yes");
+                visitCountInfo.setVisitCount(1L);
+            }
+            visitCountInfo.setLastModified(Timestamp.valueOf(adjustedTime));
+            mariaJPA_visitCountInfo.save(visitCountInfo);
+        }
+        else{
+            visitCountInfo visitCountInfo =mariaJPA_visitCountInfo.findByVisitName("consent_no");
+            if (visitCountInfo != null) {
+                // 이미 있는 경우 count를 1 증가
+                visitCountInfo.setVisitCount(visitCountInfo.getVisitCount() + 1);
+            } else {
+                // 새로운 객체를 생성하여 추가
+                visitCountInfo = new visitCountInfo();
+                visitCountInfo.setVisitName("consent_no");
+                visitCountInfo.setVisitCount(1L);
+            }
+            LocalDateTime adjustedTime = LocalDateTime.now().plusHours(9);//aws상 표준시간+9 필요함.
+            visitCountInfo.setLastModified(Timestamp.valueOf(adjustedTime));
+            mariaJPA_visitCountInfo.save(visitCountInfo);
+
         }
 
         String mbti_ex1, mbti_ex2, mbti_ex3, mbti_name;
