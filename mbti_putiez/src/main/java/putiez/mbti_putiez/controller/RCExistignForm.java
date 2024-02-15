@@ -101,37 +101,7 @@ public class RCExistignForm {
 
         log.info(value);
 
-        LocalDateTime adjustedTime = LocalDateTime.now().plusHours(9);//aws상 표준시간+9 필요함.
-        if (consent.equals("yes")){
-            insertVisitInfo(value, department, Timestamp.valueOf(adjustedTime));
-            visitCountInfo visitCountInfo =mariaJPA_visitCountInfo.findByVisitName("consent_yes");
-            if (visitCountInfo != null) {
-                // 이미 있는 경우 count를 1 증가
-                visitCountInfo.setVisitCount(visitCountInfo.getVisitCount() + 1);
-            } else {
-                // 새로운 객체를 생성하여 추가
-                visitCountInfo = new visitCountInfo();
-                visitCountInfo.setVisitName("consent_yes");
-                visitCountInfo.setVisitCount(1L);
-            }
-            visitCountInfo.setLastModified(Timestamp.valueOf(adjustedTime));
-            mariaJPA_visitCountInfo.save(visitCountInfo);
-        }
-        else{
-            insertVisitInfo("consent_no_mbti", "consent_no_department", Timestamp.valueOf(adjustedTime));
-            visitCountInfo visitCountInfo =mariaJPA_visitCountInfo.findByVisitName("consent_no");
-            if (visitCountInfo != null) {
-                // 이미 있는 경우 count를 1 증가
-                visitCountInfo.setVisitCount(visitCountInfo.getVisitCount() + 1);
-            } else {
-                // 새로운 객체를 생성하여 추가
-                visitCountInfo = new visitCountInfo();
-                visitCountInfo.setVisitName("consent_no");
-                visitCountInfo.setVisitCount(1L);
-            }
-            visitCountInfo.setLastModified(Timestamp.valueOf(adjustedTime));
-            mariaJPA_visitCountInfo.save(visitCountInfo);
-        }
+        recordVisitLog(consent, value, department);
 
         String mbti_ex1, mbti_ex2, mbti_ex3, mbti_name;
         int order = 0;
@@ -152,6 +122,35 @@ public class RCExistignForm {
         //return "/results/results.html";
         return "results/results";
     }
+
+    private void recordVisitLog(String consent, String value, String department){
+        LocalDateTime adjustedTime = LocalDateTime.now().plusHours(9);//aws상 표준시간+9 필요함.
+        if (consent.equals("yes")){
+            insertVisitInfo(value, department, Timestamp.valueOf(adjustedTime));
+            insertVisitCountInfo("consent_yes", Timestamp.valueOf(adjustedTime));
+        }
+        else{
+            insertVisitInfo("consent_no_mbti", "consent_no_department", Timestamp.valueOf(adjustedTime));
+            insertVisitCountInfo("consent_no", Timestamp.valueOf(adjustedTime));
+        }
+
+    }
+
+    private void insertVisitCountInfo(String consent_what, Timestamp adjustedTime){
+        visitCountInfo visitCountInfo =mariaJPA_visitCountInfo.findByVisitName(consent_what);
+        if (visitCountInfo != null) {
+            // 이미 있는 경우 count를 1 증가
+            visitCountInfo.setVisitCount(visitCountInfo.getVisitCount() + 1);
+        } else {
+            // 새로운 객체를 생성하여 추가
+            visitCountInfo = new visitCountInfo();
+            visitCountInfo.setVisitName(consent_what);
+            visitCountInfo.setVisitCount(1L);
+        }
+        visitCountInfo.setLastModified(adjustedTime);
+        mariaJPA_visitCountInfo.save(visitCountInfo);
+    }
+
 
     //            insertVisitInfo(value, department, Timestamp.valueOf(adjustedTime));
     private void insertVisitInfo(String value, String department, Timestamp adjustedTime){
