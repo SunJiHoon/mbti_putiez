@@ -71,24 +71,16 @@ public class RCExistignForm {
         //consent정보와 department정보 확인
         String consent = formData.get("consent");
         String department = formData.get("department");
-        String str = formData.get("mbtiElements");
+        String mbtiElements_str = formData.get("mbtiElements");
 
         // 문자열에서 괄호 및 쌍따옴표를 제거하고 쉼표로 구분된 각 요소를 추출
-        String[] mbtiElements = str.substring(1, str.length() - 1).split(",");
+        String[] mbtiElements = getMbtiElementsFromStr(mbtiElements_str);
 
-        // 배열에 각 요소 추가
-        for (int i = 0; i < mbtiElements.length; i++) {
-            mbtiElements[i] = mbtiElements[i].replaceAll("\"", ""); // 쌍따옴표 제거
-        }
-
-        int i;
         String value = "";
         value = getString(mbtiElements, value, 0, "E", "I");
         value = getString(mbtiElements, value, 3, "N", "S");
         value = getString(mbtiElements, value, 6, "T", "F");
         value = getString(mbtiElements, value, 9, "J", "P");
-
-        log.info(value);
 
         recordVisitLog(consent, value, department);
 
@@ -110,6 +102,17 @@ public class RCExistignForm {
         model.addAttribute("explain3", mbti_ex3);
         //return "/results/results.html";
         return "results/results";
+    }
+
+
+    private String[] getMbtiElementsFromStr(String mbtiElements_str){
+        // 문자열에서 괄호 및 쌍따옴표를 제거하고 쉼표로 구분된 각 요소를 추출
+        String[] mbtiElements = mbtiElements_str.substring(1, mbtiElements_str.length() - 1).split(",");
+        // 배열에 각 요소 추가
+        for (int i = 0; i < mbtiElements.length; i++) {
+            mbtiElements[i] = mbtiElements[i].replaceAll("\"", ""); // 쌍따옴표 제거
+        }
+        return mbtiElements;
     }
 
     private void recordVisitLog(String consent, String value, String department){
