@@ -101,15 +101,9 @@ public class RCExistignForm {
 
         log.info(value);
 
+        LocalDateTime adjustedTime = LocalDateTime.now().plusHours(9);//aws상 표준시간+9 필요함.
         if (consent.equals("yes")){
-            visitInfo visitinfo = new visitInfo();
-            visitinfo.setMbti(value);
-            visitinfo.setDepartment(department);
-            LocalDateTime adjustedTime = LocalDateTime.now().plusHours(9);//aws상 표준시간+9 필요함.
-            visitinfo.setCreatetime(Timestamp.valueOf(adjustedTime));
-            //visitinfo.setCreatetime(new Timestamp(System.currentTimeMillis()));
-            mariajpa.save(visitinfo);
-
+            insertVisitInfo(value, department, Timestamp.valueOf(adjustedTime));
             visitCountInfo visitCountInfo =mariaJPA_visitCountInfo.findByVisitName("consent_yes");
             if (visitCountInfo != null) {
                 // 이미 있는 경우 count를 1 증가
@@ -124,14 +118,7 @@ public class RCExistignForm {
             mariaJPA_visitCountInfo.save(visitCountInfo);
         }
         else{
-            visitInfo visitinfo = new visitInfo();
-            visitinfo.setMbti("consent_no_mbti");
-            visitinfo.setDepartment("consent_no_department");
-            LocalDateTime adjustedTime = LocalDateTime.now().plusHours(9);//aws상 표준시간+9 필요함.
-            visitinfo.setCreatetime(Timestamp.valueOf(adjustedTime));
-            //visitinfo.setCreatetime(new Timestamp(System.currentTimeMillis()));
-            mariajpa.save(visitinfo);
-
+            insertVisitInfo("consent_no_mbti", "consent_no_department", Timestamp.valueOf(adjustedTime));
             visitCountInfo visitCountInfo =mariaJPA_visitCountInfo.findByVisitName("consent_no");
             if (visitCountInfo != null) {
                 // 이미 있는 경우 count를 1 증가
@@ -144,7 +131,6 @@ public class RCExistignForm {
             }
             visitCountInfo.setLastModified(Timestamp.valueOf(adjustedTime));
             mariaJPA_visitCountInfo.save(visitCountInfo);
-
         }
 
         String mbti_ex1, mbti_ex2, mbti_ex3, mbti_name;
@@ -166,6 +152,17 @@ public class RCExistignForm {
         //return "/results/results.html";
         return "results/results";
     }
+
+    //            insertVisitInfo(value, department, Timestamp.valueOf(adjustedTime));
+    private void insertVisitInfo(String value, String department, Timestamp adjustedTime){
+        visitInfo visitinfo = new visitInfo();
+        visitinfo.setMbti(value);
+        visitinfo.setDepartment(department);
+        visitinfo.setCreatetime(adjustedTime);
+        //visitinfo.setCreatetime(new Timestamp(System.currentTimeMillis()));
+        mariajpa.save(visitinfo);
+    }
+
 
     private String makeName(String value) {
         String name = "";
