@@ -339,12 +339,12 @@
                     var parsedId = str.split("/")[0];
 
                     var selectedValue = event.target.value; // 사용자가 선택한 값
-                    console.log(parsedId);
-                    console.log(selectedValue);
+                    //console.log(parsedId);
+                    //console.log(selectedValue);
 
                     updateResponse(parsedId, selectedValue);
 
-                    console.log(responses);
+                    //console.log(responses);
 
 
                     //var answerElement = document.createElement('p');
@@ -632,12 +632,12 @@
             mbtiElements: responses
         })
             .then(function (response) {
-                console.log(response);
+                //console.log(response);
                 // 성공 시 처리
                 //window.location.href = '/result-existing'; // 결과 페이지로 이동
             })
             .catch(function (error) {
-                console.error(error);
+                //console.error(error);
                 // 실패 시 처리
             });
     }
