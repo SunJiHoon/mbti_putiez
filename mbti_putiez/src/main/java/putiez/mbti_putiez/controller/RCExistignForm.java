@@ -124,6 +124,14 @@ public class RCExistignForm {
             mariaJPA_visitCountInfo.save(visitCountInfo);
         }
         else{
+            visitInfo visitinfo = new visitInfo();
+            visitinfo.setMbti("consent_no_mbti");
+            visitinfo.setDepartment("consent_no_department");
+            LocalDateTime adjustedTime = LocalDateTime.now().plusHours(9);//aws상 표준시간+9 필요함.
+            visitinfo.setCreatetime(Timestamp.valueOf(adjustedTime));
+            //visitinfo.setCreatetime(new Timestamp(System.currentTimeMillis()));
+            mariajpa.save(visitinfo);
+
             visitCountInfo visitCountInfo =mariaJPA_visitCountInfo.findByVisitName("consent_no");
             if (visitCountInfo != null) {
                 // 이미 있는 경우 count를 1 증가
@@ -134,7 +142,6 @@ public class RCExistignForm {
                 visitCountInfo.setVisitName("consent_no");
                 visitCountInfo.setVisitCount(1L);
             }
-            LocalDateTime adjustedTime = LocalDateTime.now().plusHours(9);//aws상 표준시간+9 필요함.
             visitCountInfo.setLastModified(Timestamp.valueOf(adjustedTime));
             mariaJPA_visitCountInfo.save(visitCountInfo);
 
