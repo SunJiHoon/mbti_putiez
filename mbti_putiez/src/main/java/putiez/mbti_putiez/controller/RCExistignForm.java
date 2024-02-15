@@ -71,11 +71,7 @@ public class RCExistignForm {
         //consent정보와 department정보 확인
         String consent = formData.get("consent");
         String department = formData.get("department");
-        log.info(consent);
-        log.info(department);
-
         String str = formData.get("mbtiElements");
-        log.info(str);
 
         // 문자열에서 괄호 및 쌍따옴표를 제거하고 쉼표로 구분된 각 요소를 추출
         String[] mbtiElements = str.substring(1, str.length() - 1).split(",");
@@ -84,13 +80,6 @@ public class RCExistignForm {
         for (int i = 0; i < mbtiElements.length; i++) {
             mbtiElements[i] = mbtiElements[i].replaceAll("\"", ""); // 쌍따옴표 제거
         }
-
-        //String[] mbtiElements = ["x", "x", "x","x", "x", "x","x", "x", "x","x", "x", "x"];//mbtiDTO.getMbtiElements();
-        //String[] mbtiElements = //new String[]{formData.get("mbtiElements")};//{"x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"};
-        //String[] mbtiElements = mbtiDTO.getMbtiElements();
-        log.info(Arrays.toString(mbtiElements));
-
-        //mbtiElements 안에는 ["x", "x", "x","x", "x", "x","x", "x", "x","x", "x", "x"] 가 있다.
 
         int i;
         String value = "";
