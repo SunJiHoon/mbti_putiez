@@ -10,15 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import putiez.mbti_putiez.entity.CombinationPuang;
 import putiez.mbti_putiez.entity.visitCountInfo;
 import putiez.mbti_putiez.entity.visitInfo;
+import putiez.mbti_putiez.repository.mairaJPA_combi;
 import putiez.mbti_putiez.repository.mariaJPA;
+import putiez.mbti_putiez.repository.mariaJPA_puangMBTI;
 import putiez.mbti_putiez.repository.mariaJPA_visitCountInfo;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -26,9 +30,17 @@ import java.util.Map;
 public class RCExistignForm {
     mariaJPA mariajpa;
     mariaJPA_visitCountInfo mariaJPA_visitCountInfo;
-    public RCExistignForm(mariaJPA mariajpa, mariaJPA_visitCountInfo mariaJPA_visitCountInfo) {
+    mairaJPA_combi mairaJPA_combi;
+    mariaJPA_puangMBTI mariaJPA_puangMBTI;
+    public RCExistignForm(mariaJPA mariajpa,
+                          mariaJPA_visitCountInfo mariaJPA_visitCountInfo,
+                          mairaJPA_combi mairaJPA_combi,
+                          mariaJPA_puangMBTI mariaJPA_puangMBTI
+    ) {
         this.mariajpa = mariajpa;
         this.mariaJPA_visitCountInfo = mariaJPA_visitCountInfo;
+        this.mairaJPA_combi = mairaJPA_combi;
+        this.mariaJPA_puangMBTI = mariaJPA_puangMBTI;
     }
 
 
@@ -100,6 +112,29 @@ public class RCExistignForm {
         model.addAttribute("explain1", mbti_ex1);
         model.addAttribute("explain2", mbti_ex2);
         model.addAttribute("explain3", mbti_ex3);
+
+
+        //잘맞는 푸앙이
+        List<CombinationPuang> goodpuang_mbtis = mairaJPA_combi.findByMbtiAndStatus(value, "good");
+        String goodpuang_mbtis_1 = goodpuang_mbtis.get(0).getCombinationPuangMBTI();
+        model.addAttribute("goodpuang1", mariaJPA_puangMBTI.findByMbti(goodpuang_mbtis_1).get().getExplanation());
+        model.addAttribute("goodpuang1_src", "../assets/" + goodpuang_mbtis_1 +".png");
+        String goodpuang_mbtis_2 = goodpuang_mbtis.get(1).getCombinationPuangMBTI();
+        model.addAttribute("goodpuang2", mariaJPA_puangMBTI.findByMbti(goodpuang_mbtis_2).get().getExplanation());
+        model.addAttribute("goodpuang2_src", "../assets/" + goodpuang_mbtis_2 +".png");
+
+
+        //안맞는 푸앙이
+        List<CombinationPuang> badpuang_mbtis = mairaJPA_combi.findByMbtiAndStatus(value, "bad");
+        if (!badpuang_mbtis.isEmpty()){
+            String badpuang_mbtis_1 = badpuang_mbtis.get(0).getCombinationPuangMBTI();
+            model.addAttribute("badpuang1", mariaJPA_puangMBTI.findByMbti(badpuang_mbtis_1).get().getExplanation());
+            model.addAttribute("badpuang1_src", "/assets/" + badpuang_mbtis_1 +".png");
+            String badpuang_mbtis_2 = badpuang_mbtis.get(1).getCombinationPuangMBTI();
+            model.addAttribute("badpuang2", mariaJPA_puangMBTI.findByMbti(badpuang_mbtis_2).get().getExplanation());
+            model.addAttribute("badpuang2_src", "/assets/" + badpuang_mbtis_2 +".png");
+        }
+
         //return "/results/results.html";
         return "results/results";
     }

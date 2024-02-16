@@ -34,6 +34,14 @@
             display: block;
             margin: 20px auto;
         }
+        .result-img-mini {
+            max-width: 100%;
+            height: auto;
+            /*display: block;*/
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-between; /* 섹션 사이에 공간을 균등하게 배분합니다. */
+        }
         .return-button {
             display: block;
             width: 200px;
@@ -87,15 +95,38 @@
         <!-- 첫 번째 섹션 -->
         <section class="section">
             <h2>나와 잘 맞는 푸앙</h2>
+            <div style="display: flex;">
+            <div style="display: block;">
             <p>- 잘 맞는 푸앙1</p>
+            <h2 th:text="${goodpuang1}"></h2>
+            <img class="result-img-mini" th:src="@{${goodpuang1_src}}" alt="MBTI 결과">
+            </div>
+            <div style="display: block;">
             <p>- 잘 맞는 푸앙2</p>
+            <h2 th:text="${goodpuang2}"></h2>
+            <img class="result-img-mini" th:src="@{${goodpuang2_src}}" alt="MBTI 결과">
+            </div>
+            </div>
         </section>
 
         <!-- 두 번째 섹션 -->
-        <section class="section">
+        <section class="section" th:if="${badpuang1_src != null}">
             <h2>나와 잘 맞지 않는 푸앙</h2>
+            <div style="display: flex;">
+            <div style="display: block;">
             <p>- 잘 안맞는 푸앙1</p>
+            <h2 th:text="${badpuang1}"></h2>
+            <img class="result-img-mini" th:src="@{${badpuang1_src}}" alt="MBTI 결과">
+            </div>
+            <div style="display: block;">
             <p>- 잘 안맞는 푸앙2</p>
+            <h2 th:text="${badpuang2}"></h2>
+            <img class="result-img-mini" th:src="@{${badpuang2_src}}" alt="MBTI 결과">
+            </div>
+            </div>
+        </section>
+        <section class="section" th:if="${badpuang1_src == null}">
+            <h2>나와 잘 맞지 않는 푸앙이는 없어!</h2>
         </section>
     </div>
 
