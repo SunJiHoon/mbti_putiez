@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -68,6 +69,13 @@ public class ShareController_api {
         urlAndResult.setResult("success");
         urlAndResult.setUrl("mbti.putiez.com/sharing/share?"+value + "&key=rand5198132451");
         return urlAndResult;
+    }
+    @GetMapping("/sharing-test2")
+    public ShareInfo asfasdfasdf(){
+        Optional<ShareInfo> shareInfoOptional = mariaJPAShareInfo.findByMbtiAndUuid("ISFP","044d8c7b88264798b55f5613e0dd3c01");
+        ShareInfo shareInfo = shareInfoOptional.get();
+        log.info(shareInfo.getCreateTime().toString());
+        return shareInfo;
     }
 }
 
