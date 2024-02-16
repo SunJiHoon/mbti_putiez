@@ -23,6 +23,7 @@ public class ShareController_api {
         //생성된 난수와 mbti정보를 반환해주세요
 
         UUID uuid = UUID.randomUUID();
+        long timestamp = extractTimestampFromUUID(uuid);
 
         // UUID를 문자열로 변환
         String randomUUIDString = uuid.toString();
@@ -40,8 +41,18 @@ public class ShareController_api {
         } catch (Exception e) {
             result.setStatus("fail");
         }
-        result.setUrl("mbti.putiez.com/sharing/share?"+ value + "&key=" + randomNumber);
+        result.setUrl("mbti.putiez.com/sharing/share?mbti="+ value + "&key=" + randomNumber);
         return result;
+    }
+    public static long extractTimestampFromUUID(UUID uuid) {
+        // UUID의 16진수 표현을 문자열로 변환
+        String uuidString = uuid.toString();
+
+        // UUID의 첫 번째 8자리를 추출하여 16진수로 변환
+        String timestampHex = uuidString.substring(0, 8);
+
+        // 16진수를 10진수로 변환하여 타임스탬프를 얻음
+        return Long.parseLong(timestampHex, 16);
     }
 
     @PostMapping("/sharing-test")//요청경로 /api/sharing
