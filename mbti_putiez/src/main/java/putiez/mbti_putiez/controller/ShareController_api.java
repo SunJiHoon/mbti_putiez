@@ -5,10 +5,12 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import putiez.mbti_putiez.entity.ShareInfo;
 import putiez.mbti_putiez.repository.*;
 
 @RestController
@@ -24,12 +26,16 @@ public class ShareController_api {
     @PostMapping("/sharing")//요청경로 /api/sharing
     public Result sharePage(@RequestParam("value") String value) {
         log.info(value);
+        ShareInfo shareInfo = new ShareInfo();
+        shareInfo.setMbti(value);
+
         Result result = new Result();
         //json객체를 반환해주세요
         //생성된 난수와 mbti정보를 반환해주세요
 
         UUID uuid = UUID.randomUUID();
-        long timestamp = extractTimestampFromUUID(uuid);
+        Timestamp timestamp = extractTimestampFromUUID(uuid);
+        shareInfo.setCreateTime(timestamp);
 
         // UUID를 문자열로 변환
         String randomUUIDString = uuid.toString();
@@ -43,22 +49,25 @@ public class ShareController_api {
 
         try {
             //에러 검증 내용을 여기에 적어주세요.
-            result.setStatus("success");
+            result.setStatus("available");
         } catch (Exception e) {
-            result.setStatus("fail");
+            result.setStatus("unavailable");
         }
         result.setUrl("mbti.putiez.com/sharing/share?mbti="+ value + "&key=" + randomNumber);
+        shareInfo.setStatus(result.getStatus());
+        mariaJPAShareInfo.save(shareInfo);
         return result;
     }
-    public static long extractTimestampFromUUID(UUID uuid) {
-        // UUID의 16진수 표현을 문자열로 변환
-        String uuidString = uuid.toString();
-
+    public static Timestamp extractTimestampFromUUID(UUID uuid) {
         // UUID의 첫 번째 8자리를 추출하여 16진수로 변환
+        String uuidString = uuid.toString();
         String timestampHex = uuidString.substring(0, 8);
 
         // 16진수를 10진수로 변환하여 타임스탬프를 얻음
-        return Long.parseLong(timestampHex, 16);
+        long timestampMillis = Long.parseLong(timestampHex, 16);
+
+        // 타임스탬프를 java.sql.Timestamp 객체로 변환
+        return new Timestamp(timestampMillis);
     }
 
     @PostMapping("/sharing-test")//요청경로 /api/sharing
