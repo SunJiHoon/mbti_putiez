@@ -9,11 +9,17 @@ import java.util.UUID;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import putiez.mbti_putiez.repository.*;
 
 @RestController
 @Slf4j
 @RequestMapping("/api")
 public class ShareController_api {
+    MariaJPA_ShareInfo mariaJPAShareInfo;
+    public ShareController_api(MariaJPA_ShareInfo mariaJPAShareInfo
+    ) {
+        this.mariaJPAShareInfo = mariaJPAShareInfo;
+    }
 
     @PostMapping("/sharing")//요청경로 /api/sharing
     public Result sharePage(@RequestParam("value") String value) {
@@ -56,8 +62,8 @@ public class ShareController_api {
     }
 
     @PostMapping("/sharing-test")//요청경로 /api/sharing
-    public UrlAndResult sharePage_test(@RequestParam("value") String value) {
-        log.info(value);
+    public UrlAndResult sharePage_test(@RequestBody String value) {
+//        log.info(value);
         //json객체를 반환해주세요
         //생성된 난수와 mbti정보를 반환해주세요
         UrlAndResult urlAndResult =  new UrlAndResult();
