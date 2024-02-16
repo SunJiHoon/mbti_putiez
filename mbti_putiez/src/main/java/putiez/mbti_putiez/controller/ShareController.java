@@ -97,7 +97,7 @@ public class ShareController {
                 model.addAttribute("badpuang2", mariaJPA_puangMBTI.findByMbti(badpuang_mbtis_2).get().getExplanation());
                 model.addAttribute("badpuang2_src", "/assets/" + badpuang_mbtis_2 +".png");
             }
-            return "/sharing/share";
+            return "sharing/share";
         } else {
             return "expired";
         }
