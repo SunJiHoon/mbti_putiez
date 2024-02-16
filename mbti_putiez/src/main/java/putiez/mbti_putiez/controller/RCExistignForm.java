@@ -108,6 +108,7 @@ public class RCExistignForm {
         mbti_ex3 = makeExplain(value, order);
 
         model.addAttribute("name", mbti_name);
+        model.addAttribute("value", value);
         model.addAttribute("key", "../assets/" + value + ".png");
         model.addAttribute("explain1", mbti_ex1);
         model.addAttribute("explain2", mbti_ex2);
