@@ -24,7 +24,7 @@ public class ShareController_api {
     }
 
     @PostMapping("/sharing")//요청경로 /api/sharing
-    public Result sharePage(@RequestParam("value") String value) {
+    public Result sharePage(@RequestBody String value) {
         log.info(value);
         ShareInfo shareInfo = new ShareInfo();
         shareInfo.setMbti(value);
