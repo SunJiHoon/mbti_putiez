@@ -18,8 +18,8 @@ public class ShareController_api {
     }
 
     @PostMapping("/sharing-test")//요청경로 /api/sharing
-    public UrlAndResult sharePage_test(@RequestParam("value") String value) {
-        log.info(value);
+    public UrlAndResult sharePage_test(@RequestBody String value) {
+//        log.info(value);
         //json객체를 반환해주세요
         //생성된 난수와 mbti정보를 반환해주세요
         UrlAndResult urlAndResult =  new UrlAndResult();

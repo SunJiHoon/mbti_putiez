@@ -157,6 +157,7 @@
 
         // JSON 데이터 준비
         var jsonData = { value: document.getElementById("mbti").textContent};
+        // var value = "value:" + document.getElementById("mbti").textContent;
 
         // POST 요청 설정
         var requestOptions = {
@@ -168,7 +169,7 @@
         };
 
         // 응답 받기
-        fetch('/api/sharing-test')
+        fetch('/api/sharing-test', requestOptions)
             .then(response => response.json())
             .then(data => {
                 // JSON 응답 데이터 확인
