@@ -34,6 +34,26 @@
             display: block;
             margin: 20px auto;
         }
+        .result-img-mini {
+            max-width: 100%;
+            height: auto;
+            /*display: block;*/
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-between; /* 섹션 사이에 공간을 균등하게 배분합니다. */
+        }
+        .share-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #6982F3;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
         .return-button {
             display: block;
             width: 200px;
@@ -52,12 +72,28 @@
         }
 
         .section {
-            flex-basis: 48%;
+            flex-basis: 48%; /* 각 섹션의 초기 너비를 설정합니다. */
             padding: 10px;
             background-color: #f2f2f2;
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
+        #hiddenButton {
+            border: none;
+            cursor: pointer;
+
+            background-color: #6982F3;
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
 
         /* 미디어 쿼리를 사용하여 더 작은 화면 크기에 대응합니다. */
         @media screen and (max-width: 600px) {
@@ -76,6 +112,8 @@
 <body>
 <div class="container">
     <h1>푸앙 MBTI 테스트 결과!</h1>
+    <p id ="mbti" th:if="${value}" hidden th:text="${value}"></p>
+
     <p>당신은</p>
     <h2 th:text="${name}"></h2>
     <img class="result-img" th:src="@{${key}}" alt="MBTI 결과">
@@ -117,8 +155,67 @@
             <h2>나와 잘 맞지 않는 푸앙이는 없어!</h2>
         </section>
     </div>
+    <!--//share-button-->
 
-    <a href="/static" class="return-button">테스트 하러 가기!</a>
+    <div style="display: block; justify-content: center;">
+        <div style="display: flex;">
+            <a href="/" class="return-button">테스트하러 가기!</a>
+        </div>
+    </div>
+    <button type="button" id="hiddenButton" style="display:none;">공유 링크 복사 하기</button>
+    <p id="hiddenalert" style="display:none;">클립보드에 복사되었습니다. 아래 링크는 24시간 동안 유효합니다.</p>
+    <p id="hiddenText" style="display:none;">hiddentext</p>
+
+
+
 </div>
 </body>
 </html>
+<script>
+    document.getElementById("share-button").addEventListener("click", function(event) {
+        event.preventDefault(); // 기본 동작(페이지 이동) 방지
+
+        // JSON 데이터 준비
+        var jsonData = { value: document.getElementById("mbti").textContent};
+        // var value = "value:" + document.getElementById("mbti").textContent;
+
+        // POST 요청 설정
+        var requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        };
+
+        // 응답 받기
+        fetch('/api/sharing', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                // JSON 응답 데이터 확인
+                if (data.status === "available") {
+                    // 버튼 생성
+                    document.getElementById("hiddenButton").style.display = "block";
+                    document.getElementById("hiddenText").textContent = data.url;
+                }
+            })
+            .catch(error => {
+                console.error('응답을 처리하는 중 오류가 발생했습니다:', error);
+            });
+    });
+
+    document.getElementById("hiddenButton").addEventListener("click", function() {
+        // console.log("Button clicked!");
+        var textToCopy = document.getElementById("hiddenText").textContent; // 복사하고자 하는 텍스트를 여기에 입력합니다.
+        navigator.clipboard.writeText(textToCopy).then(function() {
+            document.getElementById("hiddenText").style.display =  "block";
+            document.getElementById("hiddenalert").style.display =  "block";
+
+            // console.log("텍스트가 클립보드에 복사되었습니다.");
+        }, function(err) {
+            // console.error("클립보드 복사 오류:", err);
+        });
+
+    });
+
+</script>
