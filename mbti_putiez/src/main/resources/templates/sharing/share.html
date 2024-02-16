@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>푸앙 MBTI 테스트 결과</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('http://localhost:20001/assets/background.jpg');
+            background-size: auto;
+            background-repeat: repeat;
+            background-position: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .result-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        .return-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #6982F3;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sections {
+            display: flex;
+            justify-content: space-between; /* 섹션 사이에 공간을 균등하게 배분합니다. */
+        }
+
+        .section {
+            flex-basis: 48%;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 미디어 쿼리를 사용하여 더 작은 화면 크기에 대응합니다. */
+        @media screen and (max-width: 600px) {
+            .sections {
+                flex-direction: column; /* 작은 화면에서는 섹션을 세로로 배치합니다. */
+            }
+
+            .section {
+                flex-basis: auto; /* 작은 화면에서는 섹션의 너비를 자동으로 조정합니다. */
+                margin-bottom: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>푸앙 MBTI 테스트 결과!</h1>
+    <p>당신은</p>
+    <h2 th:text="${name}"></h2>
+    <img class="result-img" th:src="@{${key}}" alt="MBTI 결과">
+    <p th:text="${explain1}"></p>
+    <p th:text="${explain2}"></p>
+    <p th:text="${explain3}"></p>
+
+    <div class="sections">
+        <!-- 첫 번째 섹션 -->
+        <section class="section">
+            <h2>나와 잘 맞는 푸앙</h2>
+            <div style="display: flex;">
+                <div style="display: block;">
+                    <p>- 잘 맞는 푸앙1</p>
+                    <h2 th:text="${goodpuang1}"></h2>
+                    <img class="result-img-mini" th:src="@{${goodpuang1_src}}" alt="MBTI 결과">
+                </div>
+                <div style="display: block;">
+                    <p>- 잘 맞는 푸앙2</p>
+                    <h2 th:text="${goodpuang2}"></h2>
+                    <img class="result-img-mini" th:src="@{${goodpuang2_src}}" alt="MBTI 결과">
+                </div>
+            </div>
+        </section>
+
+        <!-- 두 번째 섹션 -->
+        <section class="section" th:if="${badpuang1_src != null}">
+            <h2>나와 잘 맞지 않는 푸앙</h2>
+            <div style="display: flex;">
+                <div style="display: block;">
+                    <p>- 잘 안맞는 푸앙1</p>
+                    <h2 th:text="${badpuang1}"></h2>
+                    <img class="result-img-mini" th:src="@{${badpuang1_src}}" alt="MBTI 결과">
+                </div>
+                <div style="display: block;">
+                    <p>- 잘 안맞는 푸앙2</p>
+                    <h2 th:text="${badpuang2}"></h2>
+                    <img class="result-img-mini" th:src="@{${badpuang2_src}}" alt="MBTI 결과">
+                </div>
+            </div>
+        </section>
+        <section class="section" th:if="${badpuang1_src == null}">
+            <h2>나와 잘 맞지 않는 푸앙이는 없어!</h2>
+        </section>
+    </div>
+
+    <a href="/static" class="return-button">테스트 하러 가기!</a>
+</div>
+</body>
+</html>
