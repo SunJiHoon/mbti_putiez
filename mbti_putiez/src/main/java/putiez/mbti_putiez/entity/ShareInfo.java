@@ -20,6 +20,9 @@ public class ShareInfo {
     @Column(name = "mbti")
     private String mbti;
 
+    @Column(name = "uuid")
+    private String uuid;
+
     @Column(name = "createTime")
     private Timestamp createTime;
 

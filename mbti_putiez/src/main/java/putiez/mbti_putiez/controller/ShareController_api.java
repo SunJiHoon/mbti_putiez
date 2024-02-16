@@ -24,8 +24,10 @@ public class ShareController_api {
     }
 
     @PostMapping("/sharing")//요청경로 /api/sharing
-    public Result sharePage(@RequestBody String value) {
-        log.info(value);
+    //public Result sharePage(@RequestBody String value) {
+    public Result sharePage(@RequestBody StringValue stringValue) {
+        String value = stringValue.getValue();
+            log.info(value);
         ShareInfo shareInfo = new ShareInfo();
         shareInfo.setMbti(value);
 
@@ -43,18 +45,15 @@ public class ShareController_api {
         // 문자열에서 '-' 제거
         String randomNumberString = randomUUIDString.replaceAll("-", "");
 
-        // 문자열의 일부를 추출하여 숫자로 변환
-        String randomNumberSubstring = randomNumberString.substring(0, 6);
-        int randomNumber = Integer.parseInt(randomNumberSubstring);
-
         try {
             //에러 검증 내용을 여기에 적어주세요.
             result.setStatus("available");
         } catch (Exception e) {
             result.setStatus("unavailable");
         }
-        result.setUrl("mbti.putiez.com/sharing/share?mbti="+ value + "&key=" + randomNumber);
+        result.setUrl("mbti.putiez.com/sharing/share?mbti="+ value + "&key=" + randomNumberString);
         shareInfo.setStatus(result.getStatus());
+        shareInfo.setUuid(randomNumberString);
         mariaJPAShareInfo.save(shareInfo);
         return result;
     }
@@ -94,4 +93,9 @@ class UrlAndResult{
     private String result;
     private String url;
 
+}
+
+@Data
+class StringValue{
+    private String value;
 }
