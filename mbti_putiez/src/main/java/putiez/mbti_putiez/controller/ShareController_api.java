@@ -1,10 +1,8 @@
 package putiez.mbti_putiez.controller;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -18,4 +16,21 @@ public class ShareController_api {
         //생성된 난수와 mbti정보를 반환해주세요
         return "";
     }
+
+    @PostMapping("/sharing-test")//요청경로 /api/sharing
+    public UrlAndResult sharePage_test(@RequestParam("value") String value) {
+        log.info(value);
+        //json객체를 반환해주세요
+        //생성된 난수와 mbti정보를 반환해주세요
+        UrlAndResult urlAndResult =  new UrlAndResult();
+        urlAndResult.setResult("success");
+        urlAndResult.setUrl("mbti.putiez.com/sharing/share?"+value + "&key=rand5198132451");
+        return urlAndResult;
+    }
+}
+
+@Data
+class UrlAndResult{
+    private String result;
+    private String url;
 }

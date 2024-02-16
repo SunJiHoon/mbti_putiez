@@ -42,6 +42,18 @@
             display: flex;
             justify-content: space-between; /* 섹션 사이에 공간을 균등하게 배분합니다. */
         }
+        .share-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #6982F3;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
         .return-button {
             display: block;
             width: 200px;
@@ -84,6 +96,8 @@
 <body>
 <div class="container">
     <h1>푸앙 MBTI 테스트 결과!</h1>
+    <p id ="mbti" th:if="${value}" hidden th:text="${value}"></p>
+
     <p>당신은</p>
     <h2 th:text="${name}"></h2>
     <img class="result-img" th:src="@{${key}}" alt="MBTI 결과">
@@ -125,8 +139,55 @@
             <h2>나와 잘 맞지 않는 푸앙이는 없어!</h2>
         </section>
     </div>
+<!--//share-button-->
 
+    <div style="display: block; justify-content: center;">
+    <div style="display: flex;">
+    <a href="#" id="share-button" class="share-button">공유하기</a>
+        <div id="new-button-container"></div>
     <a href="/" class="return-button">첫 페이지로 돌아가기</a>
+    </div>
+    </div>
 </div>
 </body>
 </html>
+<script>
+    document.getElementById("share-button").addEventListener("click", function(event) {
+        event.preventDefault(); // 기본 동작(페이지 이동) 방지
+
+        // JSON 데이터 준비
+        var jsonData = { value: document.getElementById("mbti").textContent};
+
+        // POST 요청 설정
+        var requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        };
+
+        // 응답 받기
+        fetch('/api/sharing-test')
+            .then(response => response.json())
+            .then(data => {
+                // JSON 응답 데이터 확인
+                if (data.result === "success") {
+                    // 버튼 생성
+                    const button = document.createElement('button');
+                    button.textContent = '공유 링크 복사 하기';
+                    button.addEventListener('click', () => {
+                        // 버튼 클릭 시 동작
+                        console.log('새로운 버튼이 클릭되었습니다.');
+                    });
+
+                    // 버튼을 추가할 요소 선택
+                    const container = document.getElementById('new-button-container');
+                    container.appendChild(button);
+                }
+            })
+            .catch(error => {
+                console.error('응답을 처리하는 중 오류가 발생했습니다:', error);
+            });
+    });
+</script>
