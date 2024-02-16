@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +37,8 @@ public class ShareController_api {
         //생성된 난수와 mbti정보를 반환해주세요
 
         UUID uuid = UUID.randomUUID();
-        Timestamp timestamp = extractTimestampFromUUID(uuid);
-        shareInfo.setCreateTime(timestamp);
+        LocalDateTime adjustedTime = LocalDateTime.now().plusHours(9);//aws상 표준시간+9 필요함.
+        shareInfo.setCreateTime(Timestamp.valueOf(adjustedTime));
 
         // UUID를 문자열로 변환
         String randomUUIDString = uuid.toString();
@@ -56,17 +57,6 @@ public class ShareController_api {
         shareInfo.setUuid(randomNumberString);
         mariaJPAShareInfo.save(shareInfo);
         return result;
-    }
-    public static Timestamp extractTimestampFromUUID(UUID uuid) {
-        // UUID의 첫 번째 8자리를 추출하여 16진수로 변환
-        String uuidString = uuid.toString();
-        String timestampHex = uuidString.substring(0, 8);
-
-        // 16진수를 10진수로 변환하여 타임스탬프를 얻음
-        long timestampMillis = Long.parseLong(timestampHex, 16);
-
-        // 타임스탬프를 java.sql.Timestamp 객체로 변환
-        return new Timestamp(timestampMillis);
     }
 
     @PostMapping("/sharing-test")//요청경로 /api/sharing
