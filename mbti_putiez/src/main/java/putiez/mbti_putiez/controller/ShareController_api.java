@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.*;
 public class ShareController_api {
 
     @PostMapping("/sharing")//요청경로 /api/sharing
-    public Result sharePage() {
+    public Result sharePage(@RequestParam("value") String value) {
+        log.info(value);
         Result result = new Result();
         //json객체를 반환해주세요
         //생성된 난수와 mbti정보를 반환해주세요
@@ -33,17 +34,14 @@ public class ShareController_api {
         String randomNumberSubstring = randomNumberString.substring(0, 6);
         int randomNumber = Integer.parseInt(randomNumberSubstring);
 
-        result.setRandom(randomNumber);
-        result.setMbti("ENFJ");
+        try {
+            //에러 검증 내용을 여기에 적어주세요.
+            result.setStatus("success");
+        } catch (Exception e) {
+            result.setStatus("fail");
+        }
+        result.setUrl("mbti.putiez.com/sharing/share?"+ value + "&key=" + randomNumber);
         return result;
-    }
-
-
-    @Getter @Setter
-    static class Result {
-        private int random;
-        private String mbti;
-
     }
 
     @PostMapping("/sharing-test")//요청경로 /api/sharing
@@ -56,6 +54,13 @@ public class ShareController_api {
         urlAndResult.setUrl("mbti.putiez.com/sharing/share?"+value + "&key=rand5198132451");
         return urlAndResult;
     }
+}
+
+@Data
+class Result {
+    private String status;
+    private String url;
+
 }
 
 @Data
