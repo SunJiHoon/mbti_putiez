@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-image: url('http://localhost:20001/assets/background.jpg');
+            /*background-image: url('http://localhost:20001/assets/background.jpg');*/
             background-size: auto;
             background-repeat: repeat;
             background-position: center;
@@ -307,4 +307,29 @@
         });
 
     });
+</script>
+
+<script th:inline="javascript">
+    // var baseUrl = [[${myCurrentUrl}]];
+    //var baseUrl = "http://localhost:20001"//fetch(~~~) get요청
+    //fetch문으로 path에 대한 응답을 받자.
+    // POST 요청 설정
+    var requestOptions = {
+        method: 'GET',
+    };
+
+    fetch('/requestPath', requestOptions)
+        .then(response => response.text()) // 응답 데이터를 텍스트로 변환
+        .then(data => {
+            //console.log(data);
+            var baseUrl = data;
+            var backgroundImageUrl = baseUrl + '/assets/background.jpg';
+            document.body.style.backgroundImage = 'url(' + backgroundImageUrl + ')';
+            console.log(document.body.style.backgroundImage);
+
+        });
+    //컨트롤러 PathController에선 경로 반환 // application.preperties에서
+
+
+    //console.log(document.body.style.backgroundImage)
 </script>
