@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,9 @@ public class RCExistignForm {
         this.mariaJPA_puangMBTI = mariaJPA_puangMBTI;
     }
 
+    //api.key.KAKAO_API_KEY
+    @Value("${api.key.KAKAO_API_KEY}")
+    private String kakaoapikey;
 
     @GetMapping("/privacy-policy")
     public String showPrivacyPolicy(){
@@ -135,6 +139,8 @@ public class RCExistignForm {
             model.addAttribute("badpuang2", mariaJPA_puangMBTI.findByMbti(badpuang_mbtis_2).get().getExplanation());
             model.addAttribute("badpuang2_src", "/assets/" + badpuang_mbtis_2 +".png");
         }
+
+        model.addAttribute("kakaoapikey", kakaoapikey);
 
         //return "/results/results.html";
         return "results/results";
