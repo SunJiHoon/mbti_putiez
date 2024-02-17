@@ -210,11 +210,6 @@
 </script>
 
 <script>
-
-</script>
-
-
-<script>
     document.getElementById("share-button").addEventListener("click", function(event) {
         event.preventDefault(); // 기본 동작(페이지 이동) 방지
 
@@ -242,7 +237,7 @@
                     document.getElementById("hiddenText").textContent = data.url;
                     //document.getElementById("kakaotalk-button-div").style.display =  "flex";
                     document.getElementById("kakaotalk-button-div").style.display =  "block";
-                    console.log(document.getElementById("hiddenText").textContent);
+                    //console.log(document.getElementById("hiddenText").textContent);
                     Kakao.Share.createDefaultButton({
                         container: '#kakaotalk-sharing-btn',
                         objectType: 'feed',
@@ -264,9 +259,9 @@
                             },
                         },
                         social: {
-                            likeCount: 25738,
+                            //likeCount: 25738,
                             //commentCount: 45,
-                            sharedCount: 52830,
+                            //sharedCount: 52830,
                         },
                         buttons: [
                             {

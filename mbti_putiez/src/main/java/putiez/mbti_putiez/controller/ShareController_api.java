@@ -3,6 +3,7 @@ package putiez.mbti_putiez.controller;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -24,6 +25,9 @@ public class ShareController_api {
     ) {
         this.mariaJPAShareInfo = mariaJPAShareInfo;
     }
+
+    @Value("${myCurrentUrl}")
+    private String myCurrentUrl;
 
     @PostMapping("/sharing")//요청경로 /api/sharing
     //public Result sharePage(@RequestBody String value) {
@@ -53,7 +57,8 @@ public class ShareController_api {
         } catch (Exception e) {
             result.setStatus("unavailable");
         }
-        result.setUrl("mbti.putiez.com/sharing/share?mbti="+ value + "&key=" + randomNumberString);
+        //myCurrentUrl
+        result.setUrl(myCurrentUrl + "/sharing/share?mbti="+ value + "&key=" + randomNumberString);
         shareInfo.setStatus(result.getStatus());
         shareInfo.setUuid(randomNumberString);
         mariaJPAShareInfo.save(shareInfo);
@@ -67,7 +72,7 @@ public class ShareController_api {
         //생성된 난수와 mbti정보를 반환해주세요
         UrlAndResult urlAndResult =  new UrlAndResult();
         urlAndResult.setResult("success");
-        urlAndResult.setUrl("mbti.putiez.com/sharing/share?"+value + "&key=rand5198132451");
+        urlAndResult.setUrl("mbt.iputiez.com/sharing/share?"+value + "&key=rand5198132451");
         return urlAndResult;
     }
     @GetMapping("/sharing-test2")
