@@ -9,6 +9,7 @@ import putiez.mbti_putiez.repository.mariaJPA;
 import putiez.mbti_putiez.repository.mariaJPA_puangMBTI;
 import putiez.mbti_putiez.repository.mariaJPA_visitCountInfo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -73,6 +74,19 @@ public class StatisticsMakingService {
         int entireSize = size_ENFJ + size_ENFP + size_ENTJ + size_ENTP + size_ESFJ + size_ESFP + size_ESTP + size_ESTJ
                 + size_INFJ + size_INFP + size_INTJ + size_ISFP + size_ISTJ + size_ISTP + size_ISFJ + size_INTP;
 
+        Map<String, Double> percentMbti = new HashMap<>();
+
+        percentMbti.put("ENFJ", 100 * ((double)size_ENFJ / (double)entireSize)); percentMbti.put("ENFP", 100 * ((double)size_ENFP / (double)entireSize));
+        percentMbti.put("ENTJ", 100 * ((double)size_ENTJ / (double)entireSize)); percentMbti.put("ENTP", 100 * ((double)size_ENTP / (double)entireSize));
+        percentMbti.put("ESFJ", 100 * ((double)size_ESFJ / (double)entireSize)); percentMbti.put("ESFJ", 100 * ((double)size_ESFJ / (double)entireSize));
+        percentMbti.put("ESTJ", 100 * ((double)size_ESTJ / (double)entireSize)); percentMbti.put("ESTP", 100 * ((double)size_ESTP / (double)entireSize));
+
+        percentMbti.put("INFJ", 100 * ((double)size_INFJ / (double)entireSize)); percentMbti.put("INFP", 100 * ((double)size_INFP / (double)entireSize));
+        percentMbti.put("INTJ", 100 * ((double)size_INTJ / (double)entireSize)); percentMbti.put("INTP", 100 * ((double)size_INTP / (double)entireSize));
+        percentMbti.put("ISFJ", 100 * ((double)size_ISFJ / (double)entireSize)); percentMbti.put("ISFJ", 100 * ((double)size_ISFJ / (double)entireSize));
+        percentMbti.put("ISTJ", 100 * ((double)size_ISTJ / (double)entireSize)); percentMbti.put("ISTP", 100 * ((double)size_ISTP / (double)entireSize));
+        
+
         //정보를 가공
         //가공된 자료 (mbti %정보)
         //PerctenRepo에 삽입, 혹은 업데이트
@@ -95,5 +109,6 @@ public class StatisticsMakingService {
                 ));
 
  */
+        return percentMbti;
     }
 }
