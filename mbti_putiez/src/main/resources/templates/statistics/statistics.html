@@ -59,25 +59,17 @@
 </head>
 <body>
     <div class="container">
-    <h1>MBTI 통계</h1>
-    <table>
-        <tr>
-            <th>MBTI 유형</th>
-            <th>응답 수</th>
-            <th>백분율</th>
-        </tr>
-        <tr>
-            <td>ISTJ</td>
-            <td>100</td>
-            <td>10%</td>
-        </tr>
-        <tr>
-            <td>ESTP</td>
-            <td>150</td>
-            <td>15%</td>
-        </tr>
-        <!-- 나머지 MBTI 유형에 대한 행들 -->
-    </table>
+        <h1>MBTI 통계</h1>
+        <table>
+            <tr>
+                <th>MBTI 유형</th>
+                <th>백분율</th>
+            </tr>
+            <tr th:each="entry : ${percentages}">
+                <td th:text="${entry.key}"></td>
+                <td th:text="${entry.value} + '%'"></td>
+            </tr>
+        </table>
 <!--    <a href="/results/results" id="return-button" class="return-button">돌아가기</a>-->
         <button class="return-button" onclick="goBack()"> 뒤로가기</button>
     </div>
