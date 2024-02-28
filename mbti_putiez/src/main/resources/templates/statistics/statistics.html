@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MBTI 통계</title>
+<!--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,7 +69,9 @@
 <script>
 
     /*<![CDATA[*/
-    var percentages = /*[[${percentages}]]*/ {};
+    // var percentages = /*[[${percentages}]]*/ {};
+    var percentages = [10,22,33];
+
     console.log(percentages);
     /*]]>*/
     // 서버에서 전달받은 백분율 통계 데이터
@@ -84,15 +88,18 @@
     // 캔버스 요소를 가져와서 차트 생성
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
-        type: 'horizontalBar',
+        // type: 'horizontalBar',
+        type: 'bar',
+        indexAxis: 'y',
         data: {
             labels: labels,
             datasets: [{
-                label: '백분율',
+                label: "백분율",
                 data: data,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
+                borderWidth: 1,
+
             }]
         },
         options: {
