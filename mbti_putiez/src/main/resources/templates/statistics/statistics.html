@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MBTI 통계</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,7 +59,56 @@
     </style>
 </head>
 <body>
-    <div class="container">
+<div class="container">
+<h1>MBTI 통계 그래프</h1>
+<!-- 캔버스 요소를 통해 그래프를 그릴 영역 지정 -->
+<canvas id="myChart" width="800" height="400"></canvas>
+
+<script>
+
+    /*<![CDATA[*/
+    var percentages = /*[[${percentages}]]*/ {};
+    console.log(percentages);
+    /*]]>*/
+    // 서버에서 전달받은 백분율 통계 데이터
+    /*var percentages = [[${percentages}]];
+    console.log(percentages);/!* 서버에서 전달받은 데이터 *!/ */
+
+    // 백분율 통계 데이터를 내림차순으로 정렬
+    var sortedPercentages = Object.entries(percentages).sort((a, b) => b[1] - a[1]);
+
+    // 그래프를 그릴 라벨과 데이터 배열 생성
+    var labels = sortedPercentages.map(entry => entry[0]);
+    var data = sortedPercentages.map(entry => entry[1]);
+
+    // 캔버스 요소를 가져와서 차트 생성
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '백분율',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+    <button class="return-button" onclick="goBack()"> 뒤로가기</button>
+</div>
+    <!--<div class="container">
         <h1>MBTI 통계</h1>
         <table>
             <tr>
@@ -70,9 +120,9 @@
                 <td th:text="${entry.value} + '%'"></td>
             </tr>
         </table>
-<!--    <a href="/results/results" id="return-button" class="return-button">돌아가기</a>-->
+&lt;!&ndash;    <a href="/results/results" id="return-button" class="return-button">돌아가기</a>&ndash;&gt;
         <button class="return-button" onclick="goBack()"> 뒤로가기</button>
-    </div>
+    </div>-->
 </body>
 </html>
 
