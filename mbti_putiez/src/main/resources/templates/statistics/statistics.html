@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 통계</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            /*background-image: url('http://localhost:20001/assets/background.jpg');*/
+            background-size: auto;
+            background-repeat: repeat;
+            background-position: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .return-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #6982F3;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        /* 미디어 쿼리를 사용하여 더 작은 화면 크기에 대응합니다. */
+        @media screen and (max-width: 600px) {
+            .sections {
+                flex-direction: column; /* 작은 화면에서는 섹션을 세로로 배치합니다. */
+            }
+
+            .section {
+                flex-basis: auto; /* 작은 화면에서는 섹션의 너비를 자동으로 조정합니다. */
+                margin-bottom: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>MBTI 통계</h1>
+    <table>
+        <tr>
+            <th>MBTI 유형</th>
+            <th>응답 수</th>
+            <th>백분율</th>
+        </tr>
+        <tr>
+            <td>ISTJ</td>
+            <td>100</td>
+            <td>10%</td>
+        </tr>
+        <tr>
+            <td>ESTP</td>
+            <td>150</td>
+            <td>15%</td>
+        </tr>
+        <!-- 나머지 MBTI 유형에 대한 행들 -->
+    </table>
+    <a href="/result-existing" id="return-button" class="return-button">돌아가기</a>
+    </div>
+</body>
+</html>
