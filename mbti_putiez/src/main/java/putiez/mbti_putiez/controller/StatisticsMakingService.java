@@ -76,15 +76,15 @@ public class StatisticsMakingService {
 
         Map<String, Double> percentMbti = new HashMap<>();
 
-        percentMbti.put("ENFJ", 100 * ((double)size_ENFJ / (double)entireSize)); percentMbti.put("ENFP", 100 * ((double)size_ENFP / (double)entireSize));
-        percentMbti.put("ENTJ", 100 * ((double)size_ENTJ / (double)entireSize)); percentMbti.put("ENTP", 100 * ((double)size_ENTP / (double)entireSize));
-        percentMbti.put("ESFJ", 100 * ((double)size_ESFJ / (double)entireSize)); percentMbti.put("ESFJ", 100 * ((double)size_ESFJ / (double)entireSize));
-        percentMbti.put("ESTJ", 100 * ((double)size_ESTJ / (double)entireSize)); percentMbti.put("ESTP", 100 * ((double)size_ESTP / (double)entireSize));
+        percentMbti.put("동물사랑 푸앙", 100 * ((double)size_ENFJ / (double)entireSize)); percentMbti.put("반짝 푸앙", 100 * ((double)size_ENFP / (double)entireSize));
+        percentMbti.put("학잠 푸앙", 100 * ((double)size_ENTJ / (double)entireSize)); percentMbti.put("장난 푸앙", 100 * ((double)size_ENTP / (double)entireSize));
+        percentMbti.put("나만믿어 푸앙", 100 * ((double)size_ESFJ / (double)entireSize)); percentMbti.put("반팔 푸앙", 100 * ((double)size_ESFP / (double)entireSize));
+        percentMbti.put("안경 푸앙", 100 * ((double)size_ESTJ / (double)entireSize)); percentMbti.put("모험 푸앙", 100 * ((double)size_ESTP / (double)entireSize));
 
-        percentMbti.put("INFJ", 100 * ((double)size_INFJ / (double)entireSize)); percentMbti.put("INFP", 100 * ((double)size_INFP / (double)entireSize));
-        percentMbti.put("INTJ", 100 * ((double)size_INTJ / (double)entireSize)); percentMbti.put("INTP", 100 * ((double)size_INTP / (double)entireSize));
-        percentMbti.put("ISFJ", 100 * ((double)size_ISFJ / (double)entireSize)); percentMbti.put("ISFJ", 100 * ((double)size_ISFJ / (double)entireSize));
-        percentMbti.put("ISTJ", 100 * ((double)size_ISTJ / (double)entireSize)); percentMbti.put("ISTP", 100 * ((double)size_ISTP / (double)entireSize));
+        percentMbti.put("돕바 푸앙", 100 * ((double)size_INFJ / (double)entireSize)); percentMbti.put("감성 푸앙", 100 * ((double)size_INFP / (double)entireSize));
+        percentMbti.put("실험복 푸앙", 100 * ((double)size_INTJ / (double)entireSize)); percentMbti.put("후드티 푸앙", 100 * ((double)size_INTP / (double)entireSize));
+        percentMbti.put("친절 푸앙", 100 * ((double)size_ISFJ / (double)entireSize)); percentMbti.put("맨투맨 푸앙", 100 * ((double)size_ISFP / (double)entireSize));
+        percentMbti.put("셔츠 푸앙", 100 * ((double)size_ISTJ / (double)entireSize)); percentMbti.put("귀찮 푸앙", 100 * ((double)size_ISTP / (double)entireSize));
         
 
         //정보를 가공

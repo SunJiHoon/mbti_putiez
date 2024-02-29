@@ -45,6 +45,9 @@
             justify-content: center;
             align-items: center;
         }
+        .chartjs-render-monitor {
+            display: none;
+        }
 
         /* 미디어 쿼리를 사용하여 더 작은 화면 크기에 대응합니다. */
         @media screen and (max-width: 600px) {
@@ -64,13 +67,38 @@
 <div class="container">
     <h1>MBTI 통계 그래프</h1>
     <!-- 캔버스 요소를 통해 그래프를 그릴 영역 지정 -->
-    <canvas id="myChart" width="800" height="400"></canvas>
+    <canvas id="myChart"></canvas>
 
-    <script>
+    <script th:inline="javascript">
+
+        window.addEventListener('resize', function() {
+            var canvas = document.getElementById('myChart');
+            var ctx = canvas.getContext('2d');
+
+            // 화면의 너비와 높이 가져오기
+            var screenWidth = window.innerWidth;
+            var screenHeight = window.innerHeight;
+
+            // 캔버스의 비율 설정
+            var canvasRatio = 2 / 3; // 가로:세로 비율을 2:3으로 설정
+
+            // 화면 비율에 맞춰 캔버스 크기 조정
+            if (screenWidth * canvasRatio < screenHeight) {
+                canvas.width = screenWidth;
+                canvas.height = screenWidth * canvasRatio;
+            } else {
+                canvas.height = screenHeight;
+                canvas.width = screenHeight / canvasRatio;
+            }
+
+            // Chart.js를 사용하여 그래프 생성 및 업데이트
+            // 이 부분은 여러분의 Chart.js 그래프 생성 및 업데이트 코드가 위치해야 합니다.
+        });
+
 
         /*<![CDATA[*/
-        // var percentages = /*[[${percentages}]]*/ {};
-        var percentages = [10,22,33];
+        var percentages = [[${percentages}]];
+        //var percentages = [10,22,33];
 
         console.log(percentages);
         /*]]>*/
