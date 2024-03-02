@@ -61,7 +61,21 @@
                 margin-bottom: 20px;
             }
         }
-
+        #hidden-content1 {
+            display: none; /* 초기에는 숨깁니다. */
+            text-align: center; /* 텍스트를 가운데로 정렬합니다. */
+            margin-top: 20px; /* 위쪽 여백을 추가합니다. */
+        }
+        #hidden-content2 {
+            display: none; /* 초기에는 숨깁니다. */
+            text-align: center; /* 텍스트를 가운데로 정렬합니다. */
+            margin-top: 20px; /* 위쪽 여백을 추가합니다. */
+        }
+        #hidden-content3 {
+            display: none; /* 초기에는 숨깁니다. */
+            text-align: center; /* 텍스트를 가운데로 정렬합니다. */
+            margin-top: 20px; /* 위쪽 여백을 추가합니다. */
+        }
     </style>
 </head>
 <body>
@@ -73,9 +87,15 @@
     </div>
     <button class="return-button" onclick="goBack()"  style="display: block;" > 뒤로가기</button>
     <br>
-    
     <button class="return-button" id = "clickMe"  style="display: block;" >Click me</button>
+
     <div id="counter">0</div>
+    <br>
+    <div id="hidden-content3">
+        <img src="/assets/error_puang.png" alt="특별이미지">
+    </div>
+    <div id="hidden-content2">안녕하세요2</div>
+    <div id="hidden-content1">안녕하세요1</div>
 </div>
 <!--<div class="container">
     <h1>MBTI 통계</h1>
@@ -125,7 +145,7 @@
     var percentages = [[${percentages}]];
     //var percentages = [10,22,33];
 
-    console.log(percentages);
+    // console.log(percentages);
     /*]]>*/
     // 서버에서 전달받은 백분율 통계 데이터
     /*var percentages = [[${percentages}]];
@@ -203,6 +223,18 @@
         button.addEventListener('click', function() {
             count++;
             counter.textContent = count;
+
+            if (count >= 3.2) {
+                document.getElementById('hidden-content1').style.display = 'block';
+            }
+            if (count >= 6.4) {
+                document.getElementById('hidden-content2').style.display = 'block';
+            }
+            if (count >= 12.8) {
+                document.getElementById('hidden-content3').style.display = 'block';
+            }
+
+
         });
     });
 </script>
