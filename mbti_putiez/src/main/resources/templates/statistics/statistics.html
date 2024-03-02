@@ -32,6 +32,7 @@
             margin-bottom: 20px;
         }
         .return-button {
+            margin: 0 auto; /* 가운데 정렬합니다. */
             background-color: #6982F3;
             color: white; /* 글자색 */
             border: none; /* 테두리 없음 */
@@ -67,82 +68,14 @@
 <div class="container">
     <h1>MBTI 통계 그래프</h1>
     <!-- 캔버스 요소를 통해 그래프를 그릴 영역 지정 -->
-    <canvas id="myChart"></canvas>
-
-    <script th:inline="javascript">
-
-        window.addEventListener('resize', function() {
-            var canvas = document.getElementById('myChart');
-            var ctx = canvas.getContext('2d');
-
-            // 화면의 너비와 높이 가져오기
-            var screenWidth = window.innerWidth;
-            var screenHeight = window.innerHeight;
-
-            // 캔버스의 비율 설정
-            var canvasRatio = 2 / 3; // 가로:세로 비율을 2:3으로 설정
-
-            // 화면 비율에 맞춰 캔버스 크기 조정
-            if (screenWidth * canvasRatio < screenHeight) {
-                canvas.width = screenWidth;
-                canvas.height = screenWidth * canvasRatio;
-            } else {
-                canvas.height = screenHeight;
-                canvas.width = screenHeight / canvasRatio;
-            }
-
-            // Chart.js를 사용하여 그래프 생성 및 업데이트
-            // 이 부분은 여러분의 Chart.js 그래프 생성 및 업데이트 코드가 위치해야 합니다.
-        });
-
-
-        /*<![CDATA[*/
-        var percentages = [[${percentages}]];
-        //var percentages = [10,22,33];
-
-        console.log(percentages);
-        /*]]>*/
-        // 서버에서 전달받은 백분율 통계 데이터
-        /*var percentages = [[${percentages}]];
-        console.log(percentages);/!* 서버에서 전달받은 데이터 *!/ */
-
-        // 백분율 통계 데이터를 내림차순으로 정렬
-        var sortedPercentages = Object.entries(percentages).sort((a, b) => b[1] - a[1]);
-
-        // 그래프를 그릴 라벨과 데이터 배열 생성
-        var labels = sortedPercentages.map(entry => entry[0]);
-        var data = sortedPercentages.map(entry => entry[1]);
-
-        // 캔버스 요소를 가져와서 차트 생성
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            // type: 'horizontalBar',
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: "백분율",
-                    data: data,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1,
-
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                scales: {
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    </script>
-    <button class="return-button" onclick="goBack()"> 뒤로가기</button>
-    <button class="return-button"> </button>
+    <div>
+        <canvas id="myChart" style="display: block;" ></canvas>
+    </div>
+    <button class="return-button" onclick="goBack()"  style="display: block;" > 뒤로가기</button>
+    <br>
+    
+    <button class="return-button" id = "clickMe"  style="display: block;" >Click me</button>
+    <div id="counter">0</div>
 </div>
 <!--<div class="container">
     <h1>MBTI 통계</h1>
@@ -161,7 +94,78 @@
 </div>-->
 </body>
 </html>
+<script th:inline="javascript">
 
+    window.addEventListener('resize', function() {
+        var canvas = document.getElementById('myChart');
+        var ctx = canvas.getContext('2d');
+
+        // 화면의 너비와 높이 가져오기
+        var screenWidth = window.innerWidth;
+        var screenHeight = window.innerHeight;
+
+        // 캔버스의 비율 설정
+        var canvasRatio = 2 / 3; // 가로:세로 비율을 2:3으로 설정
+
+        // 화면 비율에 맞춰 캔버스 크기 조정
+        if (screenWidth * canvasRatio < screenHeight) {
+            canvas.width = screenWidth;
+            canvas.height = screenWidth * canvasRatio;
+        } else {
+            canvas.height = screenHeight;
+            canvas.width = screenHeight / canvasRatio;
+        }
+
+        // Chart.js를 사용하여 그래프 생성 및 업데이트
+        // 이 부분은 여러분의 Chart.js 그래프 생성 및 업데이트 코드가 위치해야 합니다.
+    });
+
+
+    /*<![CDATA[*/
+    var percentages = [[${percentages}]];
+    //var percentages = [10,22,33];
+
+    console.log(percentages);
+    /*]]>*/
+    // 서버에서 전달받은 백분율 통계 데이터
+    /*var percentages = [[${percentages}]];
+    console.log(percentages);/!* 서버에서 전달받은 데이터 *!/ */
+
+    // 백분율 통계 데이터를 내림차순으로 정렬
+    var sortedPercentages = Object.entries(percentages).sort((a, b) => b[1] - a[1]);
+
+    // 그래프를 그릴 라벨과 데이터 배열 생성
+    var labels = sortedPercentages.map(entry => entry[0]);
+    var data = sortedPercentages.map(entry => entry[1]);
+
+    // 캔버스 요소를 가져와서 차트 생성
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        // type: 'horizontalBar',
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "백분율",
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
 <script th:inline="javascript">
     // var baseUrl = [[${myCurrentUrl}]];
     //var baseUrl = "http://localhost:20001"//fetch(~~~) get요청
@@ -191,4 +195,15 @@
     function goBack(){
         window.history.back();
     }
+    document.addEventListener('DOMContentLoaded', function() {
+        var button = document.getElementById('clickMe');
+        var counter = document.getElementById('counter');
+        var count = 0;
+
+        button.addEventListener('click', function() {
+            count++;
+            counter.textContent = count;
+        });
+    });
 </script>
+
