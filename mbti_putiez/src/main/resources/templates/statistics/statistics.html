@@ -49,6 +49,12 @@
         .chartjs-render-monitor {
             display: none;
         }
+        .result-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
 
         /* 미디어 쿼리를 사용하여 더 작은 화면 크기에 대응합니다. */
         @media screen and (max-width: 600px) {
@@ -90,9 +96,10 @@
     <button class="return-button" id = "clickMe"  style="display: block;" >Click me</button>
 
     <div id="counter">0</div>
+
     <br>
     <div id="hidden-content3">
-        <img src="/assets/error_puang.png" alt="특별이미지">
+        <img src="/assets/error_puang.png" alt="특별이미지" class="result-img">
     </div>
     <div id="hidden-content2">안녕하세요2</div>
     <div id="hidden-content1">안녕하세요1</div>
@@ -116,7 +123,7 @@
 </html>
 <script th:inline="javascript">
 
-    window.addEventListener('resize', function() {
+    // window.addEventListener('resize', function() {
         var canvas = document.getElementById('myChart');
         var ctx = canvas.getContext('2d');
 
@@ -125,20 +132,25 @@
         var screenHeight = window.innerHeight;
 
         // 캔버스의 비율 설정
-        var canvasRatio = 2 / 3; // 가로:세로 비율을 2:3으로 설정
+    // var canvasRatio = 2 / 3; // 가로:세로 비율을
+    // var canvasRatio = 2 / 5; // 세로:가로 비율을 2:5으로 설정
+    var canvasRatio = 4 / 5; // 세로:가로 비율을 5:2으로 설정
+
+        canvas.width = screenWidth;
+        canvas.height = screenWidth * canvasRatio;
 
         // 화면 비율에 맞춰 캔버스 크기 조정
-        if (screenWidth * canvasRatio < screenHeight) {
-            canvas.width = screenWidth;
-            canvas.height = screenWidth * canvasRatio;
-        } else {
-            canvas.height = screenHeight;
-            canvas.width = screenHeight / canvasRatio;
-        }
+        // if (screenWidth * canvasRatio < screenHeight) {
+        //     canvas.width = screenWidth;
+        //     canvas.height = screenWidth * canvasRatio;
+        // } else {
+        //     canvas.height = screenHeight;
+        //     canvas.width = screenHeight / canvasRatio;
+        // }
 
         // Chart.js를 사용하여 그래프 생성 및 업데이트
         // 이 부분은 여러분의 Chart.js 그래프 생성 및 업데이트 코드가 위치해야 합니다.
-    });
+    // });
 
 
     /*<![CDATA[*/
