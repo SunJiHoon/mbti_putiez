@@ -80,15 +80,15 @@
             var screenHeight = window.innerHeight;
 
             // 캔버스의 비율 설정
-            var canvasRatio = 2 / 3; // 가로:세로 비율을 2:3으로 설정
+            var canvasRatio = 2 / 3; // 세로:가로 비율을 3:2로 설정
 
             // 화면 비율에 맞춰 캔버스 크기 조정
-            if (screenWidth * canvasRatio < screenHeight) {
-                canvas.width = screenWidth;
-                canvas.height = screenWidth * canvasRatio;
-            } else {
+            if (screenHeight * canvasRatio < screenWidth) {
                 canvas.height = screenHeight;
-                canvas.width = screenHeight / canvasRatio;
+                canvas.width = screenHeight * canvasRatio;
+            } else {
+                canvas.width = screenWidth;
+                canvas.height = screenWidth / canvasRatio;
             }
 
             // Chart.js를 사용하여 그래프 생성 및 업데이트
