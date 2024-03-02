@@ -82,6 +82,12 @@
             text-align: center; /* 텍스트를 가운데로 정렬합니다. */
             margin-top: 20px; /* 위쪽 여백을 추가합니다. */
         }
+        #hidden-content4 {
+            display: none; /* 초기에는 숨깁니다. */
+            text-align: center; /* 텍스트를 가운데로 정렬합니다. */
+            margin-top: 20px; /* 위쪽 여백을 추가합니다. */
+        }
+
     </style>
 </head>
 <body>
@@ -98,6 +104,8 @@
     <div id="counter">0</div>
 
     <br>
+    <div id="hidden-content4">추가적인 히든 메시지는 없습니다. 이용해 주셔서 감사합니다!</div>
+
     <div id="hidden-content3">
         <p>tmi3/3. 히든 푸앙이 이미지!</p>
         <img src="/assets/easter_egg.png" alt="특별이미지" class="result-img">
@@ -241,20 +249,30 @@
         var button = document.getElementById('clickMe');
         var counter = document.getElementById('counter');
         var count = 0;
-
+        var num = 5;
         button.addEventListener('click', function() {
             count++;
             counter.textContent = count;
 
-            if (count >= 32) {
+
+            if (count >= Math.pow(2, num) && count < Math.pow(2, num + 1)) {
                 document.getElementById('hidden-content1').style.display = 'block';
             }
-            if (count >= 64) {
+            else if (count >= Math.pow(2, num + 1) && count < Math.pow(2, num + 2)) {
                 document.getElementById('hidden-content2').style.display = 'block';
             }
-            if (count >= 128) {
+            else if (count >= Math.pow(2, num + 2) && count < Math.pow(2, num + 3)) {
                 document.getElementById('hidden-content3').style.display = 'block';
             }
+            else if (count === Math.pow(2, num + 3)) {
+                document.getElementById('hidden-content4').style.display = 'block';
+            }
+            else if(count > Math.pow(2, num + 3)){
+                count = 0;
+                counter.textContent = count;
+            }
+
+
 
 
         });
