@@ -158,9 +158,27 @@ public class RCExistignForm {
             String badpuang_mbtis_1 = badpuang_mbtis.get(0).getCombinationPuangMBTI();
             model.addAttribute("badpuang1", mariaJPA_puangMBTI.findByMbti(badpuang_mbtis_1).get().getExplanation());
             model.addAttribute("badpuang1_src", "/assets/" + badpuang_mbtis_1 +".png");
+            bad1_ex1 = makeExplain(badpuang_mbtis_1, order);
+            order++;
+            bad1_ex2 = makeExplain(badpuang_mbtis_1, order);
+            order++;
+            bad1_ex3 = makeExplain(badpuang_mbtis_1, order);
+            model.addAttribute("bad1_explain1", bad1_ex1);
+            model.addAttribute("bad1_explain2", bad1_ex2);
+            model.addAttribute("bad1_explain3", bad1_ex3);
+            
+            order = 0;
             String badpuang_mbtis_2 = badpuang_mbtis.get(1).getCombinationPuangMBTI();
             model.addAttribute("badpuang2", mariaJPA_puangMBTI.findByMbti(badpuang_mbtis_2).get().getExplanation());
             model.addAttribute("badpuang2_src", "/assets/" + badpuang_mbtis_2 +".png");
+            bad2_ex1 = makeExplain(badpuang_mbtis_2, order);
+            order++;
+            bad2_ex2 = makeExplain(badpuang_mbtis_2, order);
+            order++;
+            bad2_ex3 = makeExplain(badpuang_mbtis_2, order);
+            model.addAttribute("bad2_explain1", bad2_ex1);
+            model.addAttribute("bad2_explain2", bad2_ex2);
+            model.addAttribute("bad2_explain3", bad2_ex3);
         }
 
         model.addAttribute("kakaoapikey", kakaoapikey);

@@ -172,11 +172,11 @@
             <div style="display: flex;">
                 <div style="display: block;">
                     <h2 th:text="${goodpuang1}"></h2>
-                    <img id="good1" class="result-img-mini" th:src="@{${goodpuang1_src}}" alt="MBTI 결과">
+                    <img id="good1" class="result-img-mini" th:src="@{${goodpuang1_src}}" alt="MBTI 결과" data-modal="modal1">
                 </div>
                 <div style="display: block;">
                     <h2 th:text="${goodpuang2}"></h2>
-                    <img id="good2" class="result-img-mini" th:src="@{${goodpuang2_src}}" alt="MBTI 결과">
+                    <img id="good2" class="result-img-mini" th:src="@{${goodpuang2_src}}" alt="MBTI 결과" data-modal="modal2">
                 </div>
             </div>
         </section>
@@ -187,13 +187,13 @@
                 <div style="display: flex;">
                     <div style="display: block;">
                         <h2 th:text="${badpuang1}"></h2>
-                        <img id="bad1" class="result-img-mini" th:src="@{${badpuang1_src}}" alt="MBTI 결과">
+                        <img id="bad1" class="result-img-mini" th:src="@{${badpuang1_src}}" alt="MBTI 결과" data-modal="modal3">
                     </div>
-                <div style="display: block;">
-                    <h2 th:text="${badpuang2}"></h2>
-                    <img id="bad2" class="result-img-mini" th:src="@{${badpuang2_src}}" alt="MBTI 결과">
+                    <div style="display: block;">
+                        <h2 th:text="${badpuang2}"></h2>
+                        <img id="bad2" class="result-img-mini" th:src="@{${badpuang2_src}}" alt="MBTI 결과" data-modal="modal4">
+                    </div>
                 </div>
-            </div>
         </section>
         <section class="section" th:if="${badpuang1_src == null}">
             <h2>나와 잘 맞지 않는 푸앙이는 없어!</h2>
@@ -201,7 +201,7 @@
     </div>
     <p>푸앙이 이미지를 클릭하면 그 푸앙이의 설명을 볼 수 있어요!</p>
 
-    <div id="myModal" class="modal">
+    <div id="modal1" class="modal">
         <!-- 모달 콘텐츠 -->
         <div class="modal-content">
             <!-- 닫기 버튼 -->
@@ -211,6 +211,45 @@
             <p th:text="${good1_explain1}"></p>
             <p th:text="${good1_explain2}"></p>
             <p th:text="${good1_explain3}"></p>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <!-- 모달 콘텐츠 -->
+        <div class="modal-content">
+            <!-- 닫기 버튼 -->
+            <span class="close">&times;</span>
+            <!-- 글씨 -->
+            <h2 th:text="${goodpuang2}"></h2>
+            <p th:text="${good2_explain1}"></p>
+            <p th:text="${good2_explain2}"></p>
+            <p th:text="${good2_explain3}"></p>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <!-- 모달 콘텐츠 -->
+        <div class="modal-content">
+            <!-- 닫기 버튼 -->
+            <span class="close">&times;</span>
+            <!-- 글씨 -->
+            <h2 th:text="${badpuang1}"></h2>
+            <p th:text="${bad1_explain1}"></p>
+            <p th:text="${bad1_explain2}"></p>
+            <p th:text="${bad1_explain3}"></p>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <!-- 모달 콘텐츠 -->
+        <div class="modal-content">
+            <!-- 닫기 버튼 -->
+            <span class="close">&times;</span>
+            <!-- 글씨 -->
+            <h2 th:text="${badpuang2}"></h2>
+            <p th:text="${bad2_explain1}"></p>
+            <p th:text="${bad2_explain2}"></p>
+            <p th:text="${bad2_explain3}"></p>
         </div>
     </div>
 <!--//share-button-->
@@ -251,9 +290,9 @@
 </body>
 </html>
 
-<script>
+<!--<script>
     // 사진을 클릭했을 때 모달 창 열기
-    var modal = document.getElementById("myModal");
+    var modal = document.getElementById("modal1");
     var img = document.getElementById("good1");
     var modalImg = document.getElementById("img01");
 
@@ -266,6 +305,46 @@
     span.onclick = function() {
         modal.style.display = "none";
     }
+</script>
+
+<script>
+    // 사진을 클릭했을 때 모달 창 열기
+    var modal = document.getElementById("modal2");
+    var img = document.getElementById("good2");
+    var modalImg = document.getElementById("img01");
+
+    img.onclick = function(){
+        modal.style.display = "block";
+    }
+
+    // 모달 창 닫기
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+</script>-->
+
+<script>
+    // 사진 클릭 이벤트 처리
+    var modals = document.querySelectorAll(".modal");
+    var images = document.querySelectorAll(".result-img-mini");
+    var closeBtns = document.querySelectorAll(".close");
+
+    images.forEach(function(img) {
+        img.addEventListener("click", function() {
+            var modalId = this.getAttribute("data-modal");
+            var modal = document.getElementById(modalId);
+            modal.style.display = "block"; // 해당 모달 창 열기
+        });
+    });
+
+    // 모달 창 닫기 이벤트 처리
+    closeBtns.forEach(function(btn) {
+        btn.addEventListener("click", function() {
+            var modal = this.parentElement.parentElement;
+            modal.style.display = "none"; // 해당 모달 창 닫기
+        });
+    });
 </script>
 
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"
