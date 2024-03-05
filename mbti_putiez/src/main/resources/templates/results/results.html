@@ -93,6 +93,43 @@
             border-radius: 5px;
             transition: background-color 0.3s;
         }
+        /* 모달 스타일 */
+        .modal {
+            display: none; /* 초기에는 숨겨진 상태로 설정 */
+            position: fixed; /* 화면에 고정 */
+            z-index: 1; /* 다른 요소 위에 표시 */
+            left: 0;
+            top: 0;
+            width: 100%; /* 창 전체 너비 */
+            height: 100%; /* 창 전체 높이 */
+            overflow: auto; /* 스크롤 가능하도록 설정 */
+            background-color: rgb(0,0,0); /* 흑색 배경 */
+            background-color: rgba(0,0,0,0.4); /* 반투명 배경 */
+        }
+
+        /* 모달 콘텐츠 스타일 */
+        .modal-content {
+            background-color: #fefefe; /* 모달 내용 배경색 */
+            margin: 15% auto; /* 화면 중앙에 위치 */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* 모달 너비 */
+        }
+
+        /* 모달 닫기 버튼 스타일 */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
         /*#hiddenButton,*/
         /*#kakaotalk-sharing-btn {*/
@@ -126,39 +163,55 @@
     <p th:text="${explain2}"></p>
     <p th:text="${explain3}"></p>
 
+    <!--<img id="myImg" src="../assets/error_puang.png" alt="사진 설명" style="width:100%;max-width:300px">-->
+
     <div class="sections">
         <!-- 첫 번째 섹션 -->
         <section class="section">
             <h2>나와 잘 맞는 푸앙</h2>
             <div style="display: flex;">
-            <div style="display: block;">
-            <h2 th:text="${goodpuang1}"></h2>
-            <img class="result-img-mini" th:src="@{${goodpuang1_src}}" alt="MBTI 결과">
-            </div>
-            <div style="display: block;">
-            <h2 th:text="${goodpuang2}"></h2>
-            <img class="result-img-mini" th:src="@{${goodpuang2_src}}" alt="MBTI 결과">
-            </div>
+                <div style="display: block;">
+                    <h2 th:text="${goodpuang1}"></h2>
+                    <img id="good1" class="result-img-mini" th:src="@{${goodpuang1_src}}" alt="MBTI 결과">
+                </div>
+                <div style="display: block;">
+                    <h2 th:text="${goodpuang2}"></h2>
+                    <img id="good2" class="result-img-mini" th:src="@{${goodpuang2_src}}" alt="MBTI 결과">
+                </div>
             </div>
         </section>
 
         <!-- 두 번째 섹션 -->
         <section class="section" th:if="${badpuang1_src != null}">
             <h2>나와 잘 맞지 않는 푸앙</h2>
-            <div style="display: flex;">
-            <div style="display: block;">
-            <h2 th:text="${badpuang1}"></h2>
-            <img class="result-img-mini" th:src="@{${badpuang1_src}}" alt="MBTI 결과">
-            </div>
-            <div style="display: block;">
-            <h2 th:text="${badpuang2}"></h2>
-            <img class="result-img-mini" th:src="@{${badpuang2_src}}" alt="MBTI 결과">
-            </div>
+                <div style="display: flex;">
+                    <div style="display: block;">
+                        <h2 th:text="${badpuang1}"></h2>
+                        <img id="bad1" class="result-img-mini" th:src="@{${badpuang1_src}}" alt="MBTI 결과">
+                    </div>
+                <div style="display: block;">
+                    <h2 th:text="${badpuang2}"></h2>
+                    <img id="bad2" class="result-img-mini" th:src="@{${badpuang2_src}}" alt="MBTI 결과">
+                </div>
             </div>
         </section>
         <section class="section" th:if="${badpuang1_src == null}">
             <h2>나와 잘 맞지 않는 푸앙이는 없어!</h2>
         </section>
+    </div>
+    <p>푸앙이 이미지를 클릭하면 그 푸앙이의 설명을 볼 수 있어요!</p>
+
+    <div id="myModal" class="modal">
+        <!-- 모달 콘텐츠 -->
+        <div class="modal-content">
+            <!-- 닫기 버튼 -->
+            <span class="close">&times;</span>
+            <!-- 글씨 -->
+            <h2 th:text="${goodpuang1}"></h2>
+            <p th:text="${good1_explain1}"></p>
+            <p th:text="${good1_explain2}"></p>
+            <p th:text="${good1_explain3}"></p>
+        </div>
     </div>
 <!--//share-button-->
 
@@ -197,6 +250,23 @@
 </div>
 </body>
 </html>
+
+<script>
+    // 사진을 클릭했을 때 모달 창 열기
+    var modal = document.getElementById("myModal");
+    var img = document.getElementById("good1");
+    var modalImg = document.getElementById("img01");
+
+    img.onclick = function(){
+        modal.style.display = "block";
+    }
+
+    // 모달 창 닫기
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+</script>
 
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"
         integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8" crossorigin="anonymous"></script>

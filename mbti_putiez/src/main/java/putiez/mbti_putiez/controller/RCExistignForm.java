@@ -119,15 +119,38 @@ public class RCExistignForm {
         model.addAttribute("explain3", mbti_ex3);
 
 
+        String good1_ex1, good1_ex2, good1_ex3, good2_ex1, good2_ex2, good2_ex3;
+        order = 0;
+
         //잘맞는 푸앙이
         List<CombinationPuang> goodpuang_mbtis = mairaJPA_combi.findByMbtiAndStatus(value, "good");
         String goodpuang_mbtis_1 = goodpuang_mbtis.get(0).getCombinationPuangMBTI();
         model.addAttribute("goodpuang1", mariaJPA_puangMBTI.findByMbti(goodpuang_mbtis_1).get().getExplanation());
         model.addAttribute("goodpuang1_src", "../assets/" + goodpuang_mbtis_1 +".png");
+        good1_ex1 = makeExplain(goodpuang_mbtis_1, order);
+        order++;
+        good1_ex2 = makeExplain(goodpuang_mbtis_1, order);
+        order++;
+        good1_ex3 = makeExplain(goodpuang_mbtis_1, order);
+        model.addAttribute("good1_explain1", good1_ex1);
+        model.addAttribute("good1_explain2", good1_ex2);
+        model.addAttribute("good1_explain3", good1_ex3);
+
+        order = 0;
         String goodpuang_mbtis_2 = goodpuang_mbtis.get(1).getCombinationPuangMBTI();
         model.addAttribute("goodpuang2", mariaJPA_puangMBTI.findByMbti(goodpuang_mbtis_2).get().getExplanation());
         model.addAttribute("goodpuang2_src", "../assets/" + goodpuang_mbtis_2 +".png");
+        good2_ex1 = makeExplain(goodpuang_mbtis_2, order);
+        order++;
+        good2_ex2 = makeExplain(goodpuang_mbtis_2, order);
+        order++;
+        good2_ex3 = makeExplain(goodpuang_mbtis_2, order);
+        model.addAttribute("good2_explain1", good2_ex1);
+        model.addAttribute("good2_explain2", good2_ex2);
+        model.addAttribute("good2_explain3", good2_ex3);
 
+        String bad1_ex1, bad1_ex2, bad1_ex3, bad2_ex1, bad2_ex2, bad2_ex3;
+        order = 0;
 
         //안맞는 푸앙이
         List<CombinationPuang> badpuang_mbtis = mairaJPA_combi.findByMbtiAndStatus(value, "bad");
