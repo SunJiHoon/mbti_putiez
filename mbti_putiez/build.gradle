@@ -27,7 +27,8 @@ dependencies {
 
 	//implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.2'
+	implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.2' // mariadb용 - 현재 배포중인 인스턴스용
+	implementation 'mysql:mysql-connector-java:8.0.32' //mysql용 - 내 로컬 노트북
 
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
