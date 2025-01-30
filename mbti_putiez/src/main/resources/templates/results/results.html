@@ -106,7 +106,12 @@
             background-color: rgb(0,0,0); /* 흑색 배경 */
             background-color: rgba(0,0,0,0.4); /* 반투명 배경 */
         }
-
+        .modal img {
+            max-width: 80%; /* 부모 요소의 80%까지 */
+            max-height: 300px; /* 최대 높이 300px */
+            width: auto;
+            height: auto;
+        }
         /* 모달 콘텐츠 스타일 */
         .modal-content {
             background-color: #fefefe; /* 모달 내용 배경색 */
@@ -253,17 +258,33 @@
         </div>
     </div>
     <div id="myModal" class="modal">
+<!--        <div class="sections">-->
+
+<!--            <section class="section">-->
+<!--                <span class="close-btn" onclick="closeModal()">×</span>-->
+<!--                <h2>5000번째 이용자!</h2>-->
+<!--                <p>축하합니다! 푸앙MBTI의 5000번째 이용자가 되셨습니다.</p>-->
+
+<!--                <div style="display: flex;">-->
+<!--                    <div style="display: block;">-->
+<!--                        <img src="/assets/5000.png" alt="5000번째 축하 이미지">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </section>-->
+<!--        </div>-->
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">×</span>
             <h2>5000번째 이용자!</h2>
-            <p>축하합니다! 푸앙MBTI의 5000번째 이용자가 되셨습니다.</p>
             <img src="/assets/5000.png" alt="5000번째 축하 이미지">
+            <p>축하합니다! 푸앙MBTI의 5000번째 이용자가 되셨습니다.</p>
+            <p>cangogi1@cau.ac.kr 로 현재 화면을 캡처하여 보내주시면 푸앙이 와앙 포토카드를 드립니다!</p>
+            <p>중앙대학교 서울캠퍼스 도서관 1층에서 직접 수령하실 수 있습니다.</p>
         </div>
     </div>
 
     <script>
         window.onload = function () {
-            let showPopup = [[${showPopup}]];
+            let showPopup = [[${is5000}]];
             if (showPopup) {
                 document.getElementById("myModal").style.display = "block";
             }
