@@ -18,6 +18,7 @@ import putiez.mbti_putiez.repository.mairaJPA_combi;
 import putiez.mbti_putiez.repository.mariaJPA;
 import putiez.mbti_putiez.repository.mariaJPA_puangMBTI;
 import putiez.mbti_putiez.repository.mariaJPA_visitCountInfo;
+import putiez.mbti_putiez.service.EventService;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -43,6 +44,7 @@ public class RCExistignForm {
         this.mairaJPA_combi = mairaJPA_combi;
         this.mariaJPA_puangMBTI = mariaJPA_puangMBTI;
     }
+    @Autowired EventService eventService;
 
     //api.key.KAKAO_API_KEY
     @Value("${api.key.KAKAO_API_KEY}")
@@ -79,6 +81,7 @@ public class RCExistignForm {
         //return "/questions/questions.html";
         return "questions/questions";
     }
+
     @PostMapping("/result-existing")
     public String resultController(@RequestParam Map<String, String> formData
                                    //@RequestBody MBTIDTO_old mbtiDTO,
@@ -182,6 +185,9 @@ public class RCExistignForm {
         }
 
         model.addAttribute("kakaoapikey", kakaoapikey);
+
+        boolean is5000 = eventService.is5000thResult();
+        model.addAttribute("is5000", is5000);
 
         //return "/results/results.html";
         return "results/results";

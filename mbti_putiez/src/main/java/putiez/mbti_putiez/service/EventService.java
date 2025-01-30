@@ -8,8 +8,8 @@ import putiez.mbti_putiez.repository.mariaJPA_visitCountInfo;
 @Slf4j
 @Service
 public class EventService {
-    private final mariaJPA mariaJPA;
-    private final mariaJPA_visitCountInfo mariaJPA_visitCountInfo;
+    mariaJPA mariaJPA;
+    mariaJPA_visitCountInfo mariaJPA_visitCountInfo;
 
     public EventService(putiez.mbti_putiez.repository.mariaJPA mariaJPA,
                         putiez.mbti_putiez.repository.mariaJPA_visitCountInfo mariaJPA_visitCountInfo) {
