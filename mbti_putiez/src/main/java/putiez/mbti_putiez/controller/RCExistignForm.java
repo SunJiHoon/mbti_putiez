@@ -189,6 +189,22 @@ public class RCExistignForm {
         boolean is5000 = eventService.is5000thResult();
         model.addAttribute("is5000", is5000);
 
+        String code = null;
+        if (eventService.getCount() == 5000) {
+            code = "5000_XDDYK";
+        } else if (eventService.getCount() == 5100) {
+            code = "5100_DKCLW";
+        } else if (eventService.getCount() == 5200) {
+            code = "5200_EOXKQ";
+        } else if (eventService.getCount() == 5300) {
+            code = "5300_VNDLW";
+        } else if (eventService.getCount() == 5400) {
+            code = "5400_EOXKA";
+        } else if (eventService.getCount() == 5500) {
+            code = "5500_TRKEJ";
+        }
+        model.addAttribute("code", code);
+
         //return "/results/results.html";
         return "results/results";
     }
