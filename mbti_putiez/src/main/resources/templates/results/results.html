@@ -252,6 +252,27 @@
             <p th:text="${bad2_explain3}"></p>
         </div>
     </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <h2>5000번째 이용자!</h2>
+            <p>축하합니다! 푸앙MBTI의 5000번째 이용자가 되셨습니다.</p>
+            <img src="/assets/sample.png" alt="5000번째 축하 이미지">
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            let showPopup = [[${showPopup}]];
+            if (showPopup) {
+                document.getElementById("myModal").style.display = "block";
+            }
+        };
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+    </script>
 <!--//share-button-->
 
 <!--    <div style="display: block; justify-content: center;">-->
