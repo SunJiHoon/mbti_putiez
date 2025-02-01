@@ -200,9 +200,10 @@ public class RCExistignForm {
             code = "5300_VNDLW";
         } else if (eventService.getCount() == 5400) {
             code = "5400_EOXKA";
-        } else if (eventService.getCount() == 5500) {
-            code = "5500_TRKEJ";
         }
+//        } else if (eventService.getCount() == 5500) {
+//            code = "5500_TRKEJ";
+//        }
         model.addAttribute("code", code);
 
         //return "/results/results.html";

@@ -16,7 +16,7 @@ public class EventService {
 
     public boolean is5000thResult() {
         //return mariajpa.count() >= 6;
-        return mariajpa.count() >= 5000 && mariajpa.count() % 100 == 0 && mariajpa.count() < 5600;
+        return mariajpa.count() >= 5000 && mariajpa.count() % 100 == 0 && mariajpa.count() < 5500;
     }
 
     public int getCount() {
