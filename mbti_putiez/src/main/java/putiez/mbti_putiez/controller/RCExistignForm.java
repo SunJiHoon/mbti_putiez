@@ -50,6 +50,13 @@ public class RCExistignForm {
     @Value("${api.key.KAKAO_API_KEY}")
     private String kakaoapikey;
 
+    @Value("${5000code}") private String code_5000;
+    @Value("${5100code}") private String code_5100;
+    @Value("${5200code}") private String code_5200;
+    @Value("${5300code}") private String code_5300;
+    @Value("${5400code}") private String code_5400;
+
+
     @GetMapping("/privacy-policy")
     public String showPrivacyPolicy(){
         return "privacy/privacy";
@@ -191,15 +198,15 @@ public class RCExistignForm {
 
         String code = null;
         if (eventService.getCount() == 5000) {
-            code = "5000_XDDYK";
+            code = code_5000;
         } else if (eventService.getCount() == 5100) {
-            code = "5100_DKCLW";
+            code = code_5100;
         } else if (eventService.getCount() == 5200) {
-            code = "5200_EOXKQ";
+            code = code_5200;
         } else if (eventService.getCount() == 5300) {
-            code = "5300_VNDLW";
+            code = code_5300;
         } else if (eventService.getCount() == 5400) {
-            code = "5400_EOXKA";
+            code = code_5400;
         }
 //        } else if (eventService.getCount() == 5500) {
 //            code = "5500_TRKEJ";
